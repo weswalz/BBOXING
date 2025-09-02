@@ -1,0 +1,305 @@
+---
+import AdminLayout from '../../components/admin/AdminLayout.astro';
+import { getCollection } from '../../lib/mongodb.js';
+
+// Get statistics
+let stats = {
+  newsCount: 0,
+  publishedCount: 0,
+  draftCount: 0,
+  mediaCount: 0,
+  pagesCount: 0
+};
+
+try {
+  const newsCollection = await getCollection('news');
+  const mediaCollection = await getCollection('media');
+  const pagesCollection = await getCollection('pages');
+  
+  stats.newsCount = await newsCollection.countDocuments();
+  stats.publishedCount = await newsCollection.countDocuments({ published: true });
+  stats.draftCount = await newsCollection.countDocuments({ published: false });
+  stats.mediaCount = await mediaCollection.countDocuments();
+  stats.pagesCount = await pagesCollection.countDocuments();
+} catch (error) {
+  console.error('Error fetching stats:', error);
+}
+
+// Get recent news
+let recentNews = [];
+try {
+  const newsCollection = await getCollection('news');
+  recentNews = await newsCollection
+    .find({})
+    .sort({ createdAt: -1 })
+    .limit(5)
+    .toArray();
+} catch (error) {
+  console.error('Error fetching recent news:', error);
+}
+---
+
+<AdminLayout pageTitle="Dashboard">
+  <style>
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .stat-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #23282d;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .stat-sublabel {
+      color: #6c757d;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .quick-actions {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .quick-actions h2 {
+      color: #23282d;
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .action-btn {
+      background: #0073aa;
+      color: white;
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .action-btn:hover {
+      background: #005a87;
+    }
+
+    .recent-activity {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .recent-activity h2 {
+      color: #23282d;
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .activity-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .activity-item {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-title {
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 0.25rem;
+    }
+
+    .activity-meta {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .activity-status {
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-published {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-draft {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .empty-state {
+      color: #6b7280;
+      font-style: italic;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .welcome-banner {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+
+    .welcome-banner h1 {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .welcome-banner p {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .action-buttons {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <div class="welcome-banner">
+    <h1>Welcome to BiYu Boxing Admin</h1>
+    <p>Manage your content, media, and site settings from this dashboard.</p>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="dashboard-grid">
+    <a href="/admin/news" class="stat-card">
+      <div class="stat-icon">📰</div>
+      <div class="stat-value">{stats.newsCount}</div>
+      <div class="stat-label">Total Articles</div>
+      <div class="stat-sublabel">
+        {stats.publishedCount} published, {stats.draftCount} drafts
+      </div>
+    </a>
+    
+    <a href="/admin/media" class="stat-card">
+      <div class="stat-icon">🖼️</div>
+      <div class="stat-value">{stats.mediaCount}</div>
+      <div class="stat-label">Media Files</div>
+    </a>
+    
+    <a href="/admin/pages" class="stat-card">
+      <div class="stat-icon">📄</div>
+      <div class="stat-value">{stats.pagesCount}</div>
+      <div class="stat-label">Pages</div>
+    </a>
+    
+    <div class="stat-card">
+      <div class="stat-icon">👤</div>
+      <div class="stat-value">1</div>
+      <div class="stat-label">Active User</div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="action-buttons">
+      <a href="/admin/news/new" class="action-btn">
+        <span>➕</span>
+        Add News
+      </a>
+      <a href="/admin/media/upload" class="action-btn">
+        <span>📤</span>
+        Upload Media
+      </a>
+      <a href="/admin/pages" class="action-btn">
+        <span>✏️</span>
+        Edit Pages
+      </a>
+      <a href="/admin/settings" class="action-btn">
+        <span>🔧</span>
+        Site Settings
+      </a>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="recent-activity">
+    <h2>Recent News Articles</h2>
+    {recentNews.length > 0 ? (
+      <ul class="activity-list">
+        {recentNews.map(article => (
+          <li class="activity-item">
+            <div>
+              <div class="activity-title">{article.title}</div>
+              <div class="activity-meta">
+                {article.author || 'Unknown'} • {new Date(article.createdAt).toLocaleDateString()}
+              </div>
+            </div>
+            <span class={`activity-status status-${article.published ? 'published' : 'draft'}`}>
+              {article.published ? 'Published' : 'Draft'}
+            </span>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div class="empty-state">
+        No articles yet. Create your first article to get started!
+      </div>
+    )}
+  </div>
+</AdminLayout>

@@ -1,0 +1,465 @@
+---
+import AdminLayout from '../../../components/admin/AdminLayout.astro';
+import { createNews, getNewsCategories, getNewsTags } from '../../../lib/news.js';
+
+let message = null;
+let formData = {};
+
+// Get existing categories and tags
+const existingCategories = await getNewsCategories();
+const existingTags = await getNewsTags();
+
+// Handle form submission
+if (Astro.request.method === 'POST') {
+  try {
+    const data = await Astro.request.formData();
+    formData = {
+      title: data.get('title'),
+      content: data.get('content'),
+      excerpt: data.get('excerpt'),
+      category: data.get('category'),
+      tags: data.get('tags')?.split(',').map(t => t.trim()).filter(t => t),
+      author: data.get('author'),
+      published: data.get('published') === 'on',
+      featured: data.get('featured') === 'on',
+      featuredImage: data.get('featuredImage'),
+      seo: {
+        metaTitle: data.get('metaTitle'),
+        metaDescription: data.get('metaDescription'),
+        metaKeywords: data.get('metaKeywords')
+      }
+    };
+
+    const newArticle = await createNews(formData);
+    
+    // Redirect to edit page after creation
+    return Astro.redirect(`/admin/news/edit/${newArticle._id}?created=true`);
+  } catch (error) {
+    console.error('Error creating news:', error);
+    message = { type: 'error', text: 'Failed to create article. Please try again.' };
+  }
+}
+---
+
+<AdminLayout pageTitle="Create News Article">
+  <style>
+    .form-container {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 2rem;
+    }
+
+    .main-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .sidebar-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .sidebar-section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #374151;
+      font-size: 0.9rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .editor-container {
+      min-height: 400px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 0.5rem;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .checkbox-group label {
+      margin-bottom: 0;
+      font-weight: normal;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: #0073aa;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #005a87;
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    .btn-outline {
+      background: white;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+
+    .btn-outline:hover {
+      background: #f9fafb;
+    }
+
+    .tags-input {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+
+    .datalist-wrapper {
+      position: relative;
+    }
+
+    @media (max-width: 1024px) {
+      .form-container {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar-content {
+        order: -1;
+      }
+    }
+  </style>
+
+  {message && (
+    <div class={`alert alert-${message.type}`}>
+      {message.text}
+    </div>
+  )}
+
+  <form method="POST" id="newsForm">
+    <div class="form-container">
+      <!-- Main Content Area -->
+      <div class="main-content">
+        <div class="form-group">
+          <label for="title">Article Title *</label>
+          <input 
+            type="text" 
+            id="title" 
+            name="title" 
+            value={formData.title || ''}
+            required 
+            placeholder="Enter article title"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="excerpt">Excerpt</label>
+          <textarea 
+            id="excerpt" 
+            name="excerpt"
+            placeholder="Brief description of the article (optional)"
+            rows="3"
+          >{formData.excerpt || ''}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="content">Content *</label>
+          <div class="editor-container">
+            <textarea 
+              id="content" 
+              name="content"
+              required
+            >{formData.content || ''}</textarea>
+          </div>
+        </div>
+
+        <!-- SEO Section -->
+        <div class="form-group">
+          <h3 class="section-title">SEO Settings</h3>
+          
+          <div class="form-group">
+            <label for="metaTitle">Meta Title</label>
+            <input 
+              type="text" 
+              id="metaTitle" 
+              name="metaTitle"
+              placeholder="SEO title (defaults to article title)"
+              value={formData.seo?.metaTitle || ''}
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="metaDescription">Meta Description</label>
+            <textarea 
+              id="metaDescription" 
+              name="metaDescription"
+              placeholder="SEO description (defaults to excerpt)"
+              rows="2"
+            >{formData.seo?.metaDescription || ''}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="metaKeywords">Meta Keywords</label>
+            <input 
+              type="text" 
+              id="metaKeywords" 
+              name="metaKeywords"
+              placeholder="Comma-separated keywords"
+              value={formData.seo?.metaKeywords || ''}
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar-content">
+        <!-- Publish Settings -->
+        <div class="sidebar-section">
+          <h3 class="section-title">Publish Settings</h3>
+          
+          <div class="checkbox-group">
+            <input 
+              type="checkbox" 
+              id="published" 
+              name="published"
+              checked={formData.published}
+            />
+            <label for="published">Publish immediately</label>
+          </div>
+
+          <div class="checkbox-group">
+            <input 
+              type="checkbox" 
+              id="featured" 
+              name="featured"
+              checked={formData.featured}
+            />
+            <label for="featured">Featured article</label>
+          </div>
+
+          <div class="btn-group">
+            <button type="submit" class="btn btn-primary" name="action" value="save">
+              <span>💾</span>
+              Save Article
+            </button>
+          </div>
+        </div>
+
+        <!-- Article Details -->
+        <div class="sidebar-section">
+          <h3 class="section-title">Article Details</h3>
+          
+          <div class="form-group">
+            <label for="author">Author</label>
+            <input 
+              type="text" 
+              id="author" 
+              name="author"
+              placeholder="Author name"
+              value={formData.author || ''}
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="category">Category</label>
+            <input 
+              type="text" 
+              id="category" 
+              name="category"
+              list="categories"
+              placeholder="Select or type category"
+              value={formData.category || ''}
+            />
+            <datalist id="categories">
+              {existingCategories.map(cat => (
+                <option value={cat} />
+              ))}
+            </datalist>
+          </div>
+
+          <div class="form-group">
+            <label for="tags">Tags</label>
+            <input 
+              type="text" 
+              id="tags" 
+              name="tags"
+              placeholder="Comma-separated tags"
+              value={formData.tags?.join(', ') || ''}
+            />
+            <div class="tags-input">
+              Existing: {existingTags.join(', ') || 'None yet'}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="featuredImage">Featured Image URL</label>
+            <input 
+              type="text" 
+              id="featuredImage" 
+              name="featuredImage"
+              placeholder="/uploads/image.jpg"
+              value={formData.featuredImage || ''}
+            />
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="sidebar-section">
+          <a href="/admin/news" class="btn btn-outline" style="width: 100%; justify-content: center;">
+            Cancel
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- TinyMCE Script -->
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+    tinymce.init({
+      selector: '#content',
+      height: 500,
+      menubar: false,
+      plugins: [
+        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+        'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+      ],
+      toolbar: 'undo redo | blocks | ' +
+        'bold italic forecolor | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'link image media | removeformat | code fullscreen | help',
+      content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 14px }',
+      promotion: false,
+      branding: false,
+      relative_urls: false,
+      remove_script_host: false,
+      convert_urls: true,
+      image_uploadtab: false,
+      image_advtab: true,
+      image_dimensions: false,
+      image_class_list: [
+        {title: 'Responsive', value: 'img-responsive'},
+        {title: 'Rounded', value: 'img-rounded'}
+      ],
+      setup: function(editor) {
+        editor.on('change', function() {
+          editor.save();
+        });
+      }
+    });
+
+    // Auto-save functionality
+    let autoSaveTimer;
+    document.getElementById('newsForm').addEventListener('input', function() {
+      clearTimeout(autoSaveTimer);
+      autoSaveTimer = setTimeout(() => {
+        // Save to localStorage
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+        localStorage.setItem('newsFormDraft', JSON.stringify(data));
+        console.log('Draft saved');
+      }, 2000);
+    });
+
+    // Load draft on page load
+    window.addEventListener('load', function() {
+      const draft = localStorage.getItem('newsFormDraft');
+      if (draft && !window.location.search.includes('created=true')) {
+        if (confirm('A draft was found. Would you like to restore it?')) {
+          const data = JSON.parse(draft);
+          Object.keys(data).forEach(key => {
+            const field = document.querySelector(`[name="${key}"]`);
+            if (field && field.type !== 'checkbox') {
+              field.value = data[key];
+            } else if (field && field.type === 'checkbox') {
+              field.checked = data[key] === 'on';
+            }
+          });
+        }
+      }
+    });
+
+    // Clear draft on successful submission
+    document.getElementById('newsForm').addEventListener('submit', function() {
+      localStorage.removeItem('newsFormDraft');
+    });
+  </script>
+</AdminLayout>

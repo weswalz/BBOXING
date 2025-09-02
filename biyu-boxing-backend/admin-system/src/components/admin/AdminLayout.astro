@@ -1,0 +1,310 @@
+---
+import { checkAuth } from '../../lib/auth-middleware.js';
+
+const { pageTitle = 'Admin' } = Astro.props;
+
+// Check authentication
+const authResult = checkAuth(Astro);
+
+// Get current page for active menu highlighting
+const currentPath = Astro.url.pathname;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{pageTitle} - BiYu Boxing Admin</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 260px;
+      background: #23282d;
+      color: white;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem;
+      background: #191e23;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid #32373c;
+    }
+
+    .sidebar-logo {
+      font-size: 1.5rem;
+    }
+
+    .sidebar-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 0;
+    }
+
+    .nav-item {
+      display: block;
+      padding: 0.75rem 1.5rem;
+      color: #b4b9be;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-item:hover {
+      background: #32373c;
+      color: white;
+    }
+
+    .nav-item.active {
+      background: #0073aa;
+      color: white;
+      position: relative;
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #fff;
+    }
+
+    .nav-icon {
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      margin-left: 260px;
+      flex: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background: white;
+      padding: 1rem 2rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header h1 {
+      color: #23282d;
+      font-size: 1.75rem;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-primary {
+      background: #0073aa;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover {
+      background: #005a87;
+    }
+
+    .logout-btn {
+      background: #dc3545;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .logout-btn:hover {
+      background: #c82333;
+    }
+
+    .content-wrapper {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    /* Mobile Menu Toggle */
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #23282d;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .header h1 {
+        font-size: 1.25rem;
+      }
+
+      .content-wrapper {
+        padding: 1rem;
+      }
+    }
+
+    /* Utility Classes */
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .alert-error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .alert-info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-logo">🥊</span>
+      <span class="sidebar-title">BiYu Boxing</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard" class={`nav-item ${currentPath === '/admin/dashboard' ? 'active' : ''}`}>
+        <span class="nav-icon">📊</span>
+        Dashboard
+      </a>
+      <a href="/admin/news" class={`nav-item ${currentPath.startsWith('/admin/news') ? 'active' : ''}`}>
+        <span class="nav-icon">📰</span>
+        News
+      </a>
+      <a href="/admin/media" class={`nav-item ${currentPath.startsWith('/admin/media') ? 'active' : ''}`}>
+        <span class="nav-icon">🖼️</span>
+        Media Gallery
+      </a>
+      <a href="/admin/pages" class={`nav-item ${currentPath.startsWith('/admin/pages') ? 'active' : ''}`}>
+        <span class="nav-icon">📄</span>
+        Pages
+      </a>
+      <a href="/admin/settings" class={`nav-item ${currentPath.startsWith('/admin/settings') ? 'active' : ''}`}>
+        <span class="nav-icon">⚙️</span>
+        Settings
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="header">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+        <h1>{pageTitle}</h1>
+      </div>
+      <div class="header-actions">
+        <slot name="header-actions" />
+        <a href="/api/auth/logout" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <div class="content-wrapper">
+      <slot />
+    </div>
+  </main>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('mobileMenuToggle')?.addEventListener('click', () => {
+      document.getElementById('sidebar')?.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const sidebar = document.getElementById('sidebar');
+      const toggle = document.getElementById('mobileMenuToggle');
+      if (sidebar && toggle && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
+        sidebar.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>

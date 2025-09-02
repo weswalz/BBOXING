@@ -1,0 +1,360 @@
+---
+import AdminLayout from '../../components/admin/AdminLayout.astro';
+import { getAllNews, deleteNews } from '../../lib/news.js';
+
+// Handle delete action
+let deleteMessage = null;
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  const action = formData.get('action');
+  const newsId = formData.get('newsId');
+  
+  if (action === 'delete' && newsId) {
+    try {
+      const deleted = await deleteNews(newsId);
+      deleteMessage = deleted 
+        ? { type: 'success', text: 'News article deleted successfully!' }
+        : { type: 'error', text: 'Failed to delete news article.' };
+    } catch (error) {
+      deleteMessage = { type: 'error', text: 'Error deleting news article.' };
+    }
+  }
+}
+
+// Get filter from query params
+const url = new URL(Astro.request.url);
+const filter = url.searchParams.get('filter') || 'all';
+
+// Build query based on filter
+let query = {};
+if (filter === 'published') query.published = true;
+if (filter === 'draft') query.published = false;
+if (filter === 'featured') query.featured = true;
+
+// Get all news articles
+const newsArticles = await getAllNews(query);
+
+// Format date helper
+function formatDate(date) {
+  if (!date) return 'N/A';
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+---
+
+<AdminLayout pageTitle="News">
+  <div slot="header-actions">
+    <a href="/admin/news/new" class="btn-primary">
+      <span>➕</span>
+      Add New Article
+    </a>
+  </div>
+
+  <style>
+    .filters {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #374151;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      background: #e5e7eb;
+    }
+
+    .filter-btn.active {
+      background: #0073aa;
+      color: white;
+      border-color: #0073aa;
+    }
+
+    .news-table {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #f9fafb;
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: #374151;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid #f3f4f6;
+      color: #374151;
+    }
+
+    tr:hover {
+      background: #f9fafb;
+    }
+
+    .news-title {
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 0.25rem;
+    }
+
+    .news-excerpt {
+      font-size: 0.875rem;
+      color: #6b7280;
+      max-width: 400px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-published {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-draft {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .featured-badge {
+      display: inline-block;
+      color: #f59e0b;
+      font-size: 1.25rem;
+      margin-left: 0.5rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-sm {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.875rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-edit {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .btn-edit:hover {
+      background: #2563eb;
+    }
+
+    .btn-delete {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-delete:hover {
+      background: #dc2626;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .empty-state h2 {
+      color: #374151;
+      margin-bottom: 1rem;
+    }
+
+    .empty-state p {
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+    }
+
+    .stats {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .stat-value {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    @media (max-width: 768px) {
+      .filters {
+        flex-wrap: wrap;
+      }
+
+      .news-excerpt {
+        display: none;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      th:nth-child(3), td:nth-child(3) {
+        display: none;
+      }
+    }
+  </style>
+
+  {deleteMessage && (
+    <div class={`alert alert-${deleteMessage.type}`}>
+      {deleteMessage.text}
+    </div>
+  )}
+
+  <!-- Statistics -->
+  <div class="stats">
+    <div class="stat-item">
+      <span>Total Articles:</span>
+      <span class="stat-value">{newsArticles.length}</span>
+    </div>
+    <div class="stat-item">
+      <span>Published:</span>
+      <span class="stat-value">{newsArticles.filter(n => n.published).length}</span>
+    </div>
+    <div class="stat-item">
+      <span>Drafts:</span>
+      <span class="stat-value">{newsArticles.filter(n => !n.published).length}</span>
+    </div>
+    <div class="stat-item">
+      <span>Featured:</span>
+      <span class="stat-value">{newsArticles.filter(n => n.featured).length}</span>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <a href="/admin/news" class={`filter-btn ${filter === 'all' ? 'active' : ''}`}>
+      All Articles
+    </a>
+    <a href="/admin/news?filter=published" class={`filter-btn ${filter === 'published' ? 'active' : ''}`}>
+      Published
+    </a>
+    <a href="/admin/news?filter=draft" class={`filter-btn ${filter === 'draft' ? 'active' : ''}`}>
+      Drafts
+    </a>
+    <a href="/admin/news?filter=featured" class={`filter-btn ${filter === 'featured' ? 'active' : ''}`}>
+      Featured
+    </a>
+  </div>
+
+  <!-- News Table -->
+  {newsArticles.length > 0 ? (
+    <div class="news-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {newsArticles.map(article => (
+            <tr>
+              <td>
+                <div class="news-title">
+                  {article.title}
+                  {article.featured && <span class="featured-badge">⭐</span>}
+                </div>
+                {article.excerpt && (
+                  <div class="news-excerpt">{article.excerpt}</div>
+                )}
+              </td>
+              <td>
+                <span class={`status-badge status-${article.published ? 'published' : 'draft'}`}>
+                  {article.published ? 'Published' : 'Draft'}
+                </span>
+              </td>
+              <td>{article.category || 'Uncategorized'}</td>
+              <td>{formatDate(article.published ? article.publishedAt : article.createdAt)}</td>
+              <td>
+                <div class="actions">
+                  <a href={`/admin/news/edit/${article._id}`} class="btn-sm btn-edit">
+                    Edit
+                  </a>
+                  <form method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this article?');">
+                    <input type="hidden" name="action" value="delete" />
+                    <input type="hidden" name="newsId" value={article._id.toString()} />
+                    <button type="submit" class="btn-sm btn-delete">
+                      Delete
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ) : (
+    <div class="empty-state">
+      <h2>No News Articles</h2>
+      <p>
+        {filter === 'all' 
+          ? "You haven't created any news articles yet."
+          : `No ${filter} articles found.`}
+      </p>
+      <a href="/admin/news/new" class="btn-primary">
+        <span>➕</span>
+        Create Your First Article
+      </a>
+    </div>
+  )}
+</AdminLayout>

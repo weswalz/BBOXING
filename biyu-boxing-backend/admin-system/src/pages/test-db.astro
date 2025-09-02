@@ -1,0 +1,124 @@
+---
+import { initializeDatabase } from '../lib/init-database.js';
+import { connectToDatabase } from '../lib/mongodb.js';
+
+let result = null;
+let collections = [];
+
+if (Astro.request.method === 'POST') {
+  result = await initializeDatabase();
+}
+
+// Test collections exist
+try {
+  const db = await connectToDatabase();
+  const collectionsList = await db.listCollections().toArray();
+  collections = collectionsList.map(c => c.name);
+} catch (error) {
+  console.error('Error listing collections:', error);
+}
+---
+
+<html>
+  <head>
+    <title>Database Test - BiYu Boxing Admin</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        background: #f5f5f5;
+      }
+      h1 {
+        color: #333;
+      }
+      .container {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin: 1rem 0;
+      }
+      button {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      button:hover {
+        background: #2563eb;
+      }
+      .success {
+        color: #22c55e;
+        background: #dcfce7;
+        padding: 1rem;
+        border-radius: 6px;
+        margin: 1rem 0;
+      }
+      .error {
+        color: #ef4444;
+        background: #fee2e2;
+        padding: 1rem;
+        border-radius: 6px;
+        margin: 1rem 0;
+      }
+      ul {
+        line-height: 2;
+      }
+      .collection-item {
+        background: #f3f4f6;
+        padding: 0.5rem 1rem;
+        margin: 0.5rem 0;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      a {
+        color: #3b82f6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🗄️ Database Schema Test</h1>
+    
+    <div class="container">
+      <h2>Initialize Database</h2>
+      <p>Click the button below to create all collections and indexes:</p>
+      
+      <form method="post">
+        <button type="submit">Initialize Database</button>
+      </form>
+      
+      {result && (
+        <div class={result.success ? "success" : "error"}>
+          {result.success ? "✅ Database initialized successfully!" : `❌ Error: ${result.error}`}
+        </div>
+      )}
+    </div>
+    
+    <div class="container">
+      <h2>Existing Collections:</h2>
+      {collections.length > 0 ? (
+        <div>
+          {collections.map(name => (
+            <div class="collection-item">{name}</div>
+          ))}
+        </div>
+      ) : (
+        <p>No collections found. Initialize the database first.</p>
+      )}
+    </div>
+    
+    <div class="container">
+      <p><a href="/">← Back to main page</a> | <a href="/admin/login">Go to Login →</a></p>
+    </div>
+  </body>
+</html>

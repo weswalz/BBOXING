@@ -1,0 +1,534 @@
+---
+import AdminLayout from '../../../../components/admin/AdminLayout.astro';
+import { getNewsById, updateNews, togglePublishStatus } from '../../../../lib/news.js';
+import { ObjectId } from 'mongodb';
+
+const { id } = Astro.params;
+
+// Check if this is a new article that was just created
+const url = new URL(Astro.request.url);
+const justCreated = url.searchParams.get('created') === 'true';
+
+let message = null;
+let article = null;
+
+// Validate ID
+try {
+  if (!ObjectId.isValid(id)) {
+    return Astro.redirect('/admin/news');
+  }
+  
+  article = await getNewsById(id);
+  if (!article) {
+    return Astro.redirect('/admin/news');
+  }
+} catch (error) {
+  console.error('Error fetching article:', error);
+  return Astro.redirect('/admin/news');
+}
+
+// Handle form submission
+if (Astro.request.method === 'POST') {
+  try {
+    const formData = await Astro.request.formData();
+    const action = formData.get('action');
+    
+    if (action === 'toggle-publish') {
+      await togglePublishStatus(id);
+      // Refresh article data
+      article = await getNewsById(id);
+      message = { 
+        type: 'success', 
+        text: article.published ? 'Article published!' : 'Article unpublished!' 
+      };
+    } else {
+      const updateData = {
+        title: formData.get('title'),
+        content: formData.get('content'),
+        excerpt: formData.get('excerpt'),
+        category: formData.get('category'),
+        tags: formData.get('tags')?.split(',').map(t => t.trim()).filter(t => t),
+        author: formData.get('author'),
+        published: formData.get('published') === 'on',
+        featured: formData.get('featured') === 'on',
+        featuredImage: formData.get('featuredImage'),
+        seo: {
+          metaTitle: formData.get('metaTitle'),
+          metaDescription: formData.get('metaDescription'),
+          metaKeywords: formData.get('metaKeywords')
+        }
+      };
+
+      await updateNews(id, updateData);
+      
+      // Refresh article data
+      article = await getNewsById(id);
+      message = { type: 'success', text: 'Article updated successfully!' };
+    }
+  } catch (error) {
+    console.error('Error updating article:', error);
+    message = { type: 'error', text: 'Failed to update article. Please try again.' };
+  }
+}
+
+// Show created message if just created
+if (justCreated && !message) {
+  message = { type: 'success', text: 'Article created successfully!' };
+}
+---
+
+<AdminLayout pageTitle="Edit News Article">
+  <style>
+    .form-container {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 2rem;
+    }
+
+    .main-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .sidebar-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .sidebar-section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #374151;
+      font-size: 0.9rem;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .editor-container {
+      min-height: 400px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 0.5rem;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .checkbox-group label {
+      margin-bottom: 0;
+      font-weight: normal;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex: 1;
+    }
+
+    .btn-primary {
+      background: #0073aa;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #005a87;
+    }
+
+    .btn-success {
+      background: #22c55e;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #16a34a;
+    }
+
+    .btn-warning {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .btn-warning:hover {
+      background: #d97706;
+    }
+
+    .btn-outline {
+      background: white;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+
+    .btn-outline:hover {
+      background: #f9fafb;
+    }
+
+    .meta-info {
+      background: #f9fafb;
+      padding: 1rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 1rem;
+    }
+
+    .meta-info strong {
+      color: #374151;
+    }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .status-published {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-draft {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .preview-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #3b82f6;
+      text-decoration: none;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+    }
+
+    .preview-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1024px) {
+      .form-container {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar-content {
+        order: -1;
+      }
+    }
+  </style>
+
+  {message && (
+    <div class={`alert alert-${message.type}`}>
+      {message.text}
+    </div>
+  )}
+
+  <form method="POST" id="newsForm">
+    <div class="form-container">
+      <!-- Main Content Area -->
+      <div class="main-content">
+        <div class="form-group">
+          <label for="title">Article Title *</label>
+          <input 
+            type="text" 
+            id="title" 
+            name="title" 
+            value={article.title}
+            required 
+            placeholder="Enter article title"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="excerpt">Excerpt</label>
+          <textarea 
+            id="excerpt" 
+            name="excerpt"
+            placeholder="Brief description of the article (optional)"
+            rows="3"
+          >{article.excerpt || ''}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="content">Content *</label>
+          <div class="editor-container">
+            <textarea 
+              id="content" 
+              name="content"
+              required
+            >{article.content || ''}</textarea>
+          </div>
+        </div>
+
+        <!-- SEO Section -->
+        <div class="form-group">
+          <h3 class="section-title">SEO Settings</h3>
+          
+          <div class="form-group">
+            <label for="metaTitle">Meta Title</label>
+            <input 
+              type="text" 
+              id="metaTitle" 
+              name="metaTitle"
+              placeholder="SEO title (defaults to article title)"
+              value={article.seo?.metaTitle || ''}
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="metaDescription">Meta Description</label>
+            <textarea 
+              id="metaDescription" 
+              name="metaDescription"
+              placeholder="SEO description (defaults to excerpt)"
+              rows="2"
+            >{article.seo?.metaDescription || ''}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="metaKeywords">Meta Keywords</label>
+            <input 
+              type="text" 
+              id="metaKeywords" 
+              name="metaKeywords"
+              placeholder="Comma-separated keywords"
+              value={article.seo?.metaKeywords || ''}
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar-content">
+        <!-- Status Section -->
+        <div class="sidebar-section">
+          <h3 class="section-title">Status</h3>
+          
+          <div class={`status-indicator status-${article.published ? 'published' : 'draft'}`}>
+            <span>{article.published ? '🟢' : '⚪'}</span>
+            {article.published ? 'Published' : 'Draft'}
+          </div>
+
+          {article.slug && (
+            <div class="meta-info">
+              <strong>URL Slug:</strong><br/>
+              {article.slug}
+              {article.published && (
+                <a href={`/news/${article.slug}`} target="_blank" class="preview-link">
+                  <span>🔗</span>
+                  View Live Article
+                </a>
+              )}
+            </div>
+          )}
+
+          <div class="meta-info">
+            <strong>Created:</strong> {new Date(article.createdAt).toLocaleString()}<br/>
+            <strong>Updated:</strong> {new Date(article.updatedAt).toLocaleString()}<br/>
+            {article.publishedAt && (
+              <>
+                <strong>Published:</strong> {new Date(article.publishedAt).toLocaleString()}
+              </>
+            )}
+          </div>
+        </div>
+
+        <!-- Publish Settings -->
+        <div class="sidebar-section">
+          <h3 class="section-title">Publish Settings</h3>
+          
+          <div class="checkbox-group">
+            <input 
+              type="checkbox" 
+              id="published" 
+              name="published"
+              checked={article.published}
+            />
+            <label for="published">Published</label>
+          </div>
+
+          <div class="checkbox-group">
+            <input 
+              type="checkbox" 
+              id="featured" 
+              name="featured"
+              checked={article.featured}
+            />
+            <label for="featured">Featured article</label>
+          </div>
+
+          <div class="btn-group">
+            <button type="submit" class="btn btn-primary" name="action" value="save">
+              <span>💾</span>
+              Update
+            </button>
+            <button type="submit" class="btn {article.published ? 'btn-warning' : 'btn-success'}" name="action" value="toggle-publish">
+              <span>{article.published ? '📝' : '🚀'}</span>
+              {article.published ? 'Unpublish' : 'Publish'}
+            </button>
+          </div>
+        </div>
+
+        <!-- Article Details -->
+        <div class="sidebar-section">
+          <h3 class="section-title">Article Details</h3>
+          
+          <div class="form-group">
+            <label for="author">Author</label>
+            <input 
+              type="text" 
+              id="author" 
+              name="author"
+              placeholder="Author name"
+              value={article.author || ''}
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="category">Category</label>
+            <input 
+              type="text" 
+              id="category" 
+              name="category"
+              placeholder="Enter category"
+              value={article.category || ''}
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="tags">Tags</label>
+            <input 
+              type="text" 
+              id="tags" 
+              name="tags"
+              placeholder="Comma-separated tags"
+              value={article.tags?.join(', ') || ''}
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="featuredImage">Featured Image URL</label>
+            <input 
+              type="text" 
+              id="featuredImage" 
+              name="featuredImage"
+              placeholder="/uploads/image.jpg"
+              value={article.featuredImage || ''}
+            />
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="sidebar-section">
+          <a href="/admin/news" class="btn btn-outline">
+            ← Back to News
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- TinyMCE Script -->
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script is:inline define:vars={{ articleContent: article.content || '' }}>
+    tinymce.init({
+      selector: '#content',
+      height: 500,
+      menubar: false,
+      plugins: [
+        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+        'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+      ],
+      toolbar: 'undo redo | blocks | ' +
+        'bold italic forecolor | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'link image media | removeformat | code fullscreen | help',
+      content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 14px }',
+      promotion: false,
+      branding: false,
+      relative_urls: false,
+      remove_script_host: false,
+      convert_urls: true,
+      setup: function(editor) {
+        editor.on('change', function() {
+          editor.save();
+        });
+      }
+    });
+  </script>
+</AdminLayout>

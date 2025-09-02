@@ -1,0 +1,294 @@
+{
+  "url": "https://biyuboxing.com",
+  "timestamp": "2025-09-01T15:42:13.882Z",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "sections": {
+    "header": {
+      "description": "Main navigation header",
+      "selector": "header, .header, nav, .nav, .top-bar",
+      "found": false,
+      "error": "elementHandle.screenshot: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying scroll into view action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    },
+    "hero": {
+      "description": "Hero/banner section with main title",
+      "selector": ".hero, .banner, .main-banner, section:first-of-type",
+      "found": false
+    },
+    "news": {
+      "description": "Latest news section",
+      "selector": "[class*=\"news\"], [class*=\"latest\"]",
+      "found": false
+    },
+    "events": {
+      "description": "Upcoming events section",
+      "selector": "[class*=\"event\"], [class*=\"upcoming\"]",
+      "found": false
+    },
+    "box-for-us": {
+      "description": "Box for us / CTA section",
+      "selector": "[class*=\"box\"], [class*=\"cta\"]",
+      "found": true,
+      "tagName": "DIV",
+      "className": "elementor-element elementor-element-e5a7b48 e-flex e-con-boxed e-con e-parent e-lazyloaded",
+      "id": "",
+      "innerHTML": "\n\t\t\t\t\t<div class=\"e-con-inner\">\n\t\t<div class=\"elementor-element elementor-element-f960d24 e-con-full e-flex e-con e-child\" data-id=\"f960d24\" data-element_type=\"container\">\n\t\t\t\t<div class=\"elementor-element elementor-element-1d999bc elementor-widget elementor-widget-image\" data-id=\"1d999bc\" data-element_type=\"widget\" data-widget_type=\"image.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<a href=\"https://www.biyuboxing.com/\">\n\t\t\t\t\t\t\t<img width=\"128\" height=\"66\" src=\"https://www.biyuboxing.com/wp-content/uploads/2025/06/logo_white-300ppi-1.png\" class=\"attachment-full size-full wp-image-116\" alt=\"\">\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t<div class=\"elementor-element elementor-element-19d0fe0 e-con-full e-flex e-con e-child\" data-id=\"19d0fe0\" data-element_type=\"container\">\n\t\t\t\t<div class=\"elementor-element elementor-element-c136f16 elementor-nav-menu--stretch elementor-nav-menu__align-center elementor-nav-menu--dropdown-mobile elementor-nav-menu__",
+      "boundingRect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 106
+      },
+      "computedStyles": {
+        "display": "flex",
+        "position": "absolute",
+        "fontSize": "16px",
+        "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontWeight": "400",
+        "color": "rgb(51, 51, 51)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "margin": "0px",
+        "padding": "0px 10px",
+        "textAlign": "start",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "borderRadius": "0px",
+        "border": "0px none rgb(51, 51, 51)",
+        "boxShadow": "none",
+        "backgroundImage": "none",
+        "backgroundSize": "auto",
+        "backgroundPosition": "0% 0%"
+      }
+    },
+    "vip": {
+      "description": "VIP signup section",
+      "selector": "[class*=\"vip\"], [class*=\"signup\"], [class*=\"newsletter\"]",
+      "found": false
+    },
+    "footer": {
+      "description": "Footer section",
+      "selector": "footer, .footer",
+      "found": true,
+      "tagName": "FOOTER",
+      "className": "elementor elementor-99 elementor-location-footer",
+      "id": "",
+      "innerHTML": "\n\t\t\t<div class=\"elementor-element elementor-element-dc45ef7 e-flex e-con-boxed e-con e-parent e-lazyloaded\" data-id=\"dc45ef7\" data-element_type=\"container\">\n\t\t\t\t\t<div class=\"e-con-inner\">\n\t\t\t\t<div class=\"elementor-element elementor-element-644a45d elementor-widget elementor-widget-heading\" data-id=\"644a45d\" data-element_type=\"widget\" data-widget_type=\"heading.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t\t\t<h3 class=\"elementor-heading-title elementor-size-default\">Join The VIP List</h3>\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"elementor-element elementor-element-2908dc1 elementor-widget elementor-widget-text-editor\" data-id=\"2908dc1\" data-element_type=\"widget\" data-widget_type=\"text-editor.default\">\n\t\t\t\t<div class=\"elementor-widget-container\">\n\t\t\t\t\t\t\t\t\t<p>GET EVENTS, NEWS AND PROMOTIONS DELIVERED TO YOUR INBOX!</p>\t\t\t\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"elementor-element elementor-element-2f21a5a elementor-widget__width-initial elementor-widget elementor-widget-shortcode\" dat",
+      "boundingRect": {
+        "x": 0,
+        "y": 53.390625,
+        "width": 1905,
+        "height": 1026.390625
+      },
+      "computedStyles": {
+        "display": "block",
+        "position": "static",
+        "fontSize": "16px",
+        "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontWeight": "400",
+        "color": "rgb(51, 51, 51)",
+        "backgroundColor": "rgb(0, 0, 0)",
+        "margin": "0px",
+        "padding": "0px",
+        "textAlign": "start",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "borderRadius": "0px",
+        "border": "0px none rgb(51, 51, 51)",
+        "boxShadow": "none",
+        "backgroundImage": "none",
+        "backgroundSize": "auto",
+        "backgroundPosition": "0% 0%"
+      }
+    }
+  },
+  "pageStructure": {
+    "title": "BiYu Promotions - Boxing Promotions in Houston, Texas",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "BIYU PROMOTIONS",
+        "className": "elementor-heading-title elementor-size-default",
+        "id": ""
+      },
+      {
+        "tag": "H2",
+        "text": "latest News",
+        "className": "elementor-heading-title elementor-size-default",
+        "id": ""
+      },
+      {
+        "tag": "H3",
+        "text": "Garcia reveals his intent ahead of WBO NABO title fight",
+        "className": "elementor-heading-title elementor-size-default",
+        "id": ""
+      },
+      {
+        "tag": "H2",
+        "text": "Upcoming EVENTS",
+        "className": "elementor-heading-title elementor-size-default",
+        "id": ""
+      },
+      {
+        "tag": "H3",
+        "text": "BiYu Brawl - October 10, 2025 - Club Hefe, Houston",
+        "className": "elementor-heading-title elementor-size-default",
+        "id": ""
+      },
+      {
+        "tag": "H2",
+        "text": "Box for us",
+        "className": "elementor-heading-title elementor-size-default",
+        "id": ""
+      },
+      {
+        "tag": "H3",
+        "text": "Join The VIP List",
+        "className": "elementor-heading-title elementor-size-default",
+        "id": ""
+      }
+    ],
+    "images": [
+      {
+        "src": "https://www.biyuboxing.com/wp-content/uploads/2025/06/logo_white-300ppi-1.png",
+        "alt": "",
+        "width": 128,
+        "height": 66,
+        "className": "attachment-full size-full wp-image-116"
+      },
+      {
+        "src": "https://www.biyuboxing.com/wp-content/uploads/2025/08/Eridson-Garcia-683x1024.jpg",
+        "alt": "Domincan Republic super featherweight Eridson Garcia",
+        "width": 683,
+        "height": 1024,
+        "className": "attachment-large size-large wp-image-1372"
+      },
+      {
+        "src": "https://www.biyuboxing.com/wp-content/uploads/2025/07/image-2025-07-02T120936.912-1024x572.png",
+        "alt": "image 2025 07 02T120936.912",
+        "width": 800,
+        "height": 446,
+        "className": "attachment-large size-large wp-image-310"
+      },
+      {
+        "src": "https://www.biyuboxing.com/wp-content/uploads/2025/06/logo_white-300ppi-2-1.png",
+        "alt": "logo white 300ppi 2 1",
+        "width": 184,
+        "height": 95,
+        "className": "attachment-large size-large wp-image-95"
+      },
+      {
+        "src": "https://www.biyuboxing.com/wp-content/uploads/2025/06/logo_white-300ppi-1.png",
+        "alt": "",
+        "width": 128,
+        "height": 66,
+        "className": "attachment-full size-full wp-image-116"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "",
+        "className": "elementor-menu-toggle",
+        "tag": "DIV",
+        "href": null
+      }
+    ],
+    "navigation": [
+      {
+        "text": "Home",
+        "href": "https://www.biyuboxing.com/",
+        "className": "elementor-item elementor-item-active"
+      },
+      {
+        "text": "About Us",
+        "href": "https://www.biyuboxing.com/about-us/",
+        "className": "elementor-item"
+      },
+      {
+        "text": "News",
+        "href": "https://www.biyuboxing.com/news/",
+        "className": "elementor-item"
+      },
+      {
+        "text": "Events",
+        "href": "https://www.biyuboxing.com/#",
+        "className": "elementor-item elementor-item-anchor has-submenu"
+      },
+      {
+        "text": "Upcoming Events",
+        "href": "https://www.biyuboxing.com/upcoming-events/",
+        "className": "elementor-sub-item"
+      },
+      {
+        "text": "Previous events",
+        "href": "https://www.biyuboxing.com/previous-events/",
+        "className": "elementor-sub-item"
+      },
+      {
+        "text": "Fighters",
+        "href": "https://www.biyuboxing.com/our-fighters/",
+        "className": "elementor-item"
+      },
+      {
+        "text": "Box for Us",
+        "href": "https://www.biyuboxing.com/the-box-for-us/",
+        "className": "elementor-item"
+      },
+      {
+        "text": "Contact Us",
+        "href": "https://www.biyuboxing.com/contact-us/",
+        "className": "elementor-item"
+      },
+      {
+        "text": "Home",
+        "href": "https://www.biyuboxing.com/",
+        "className": "elementor-item elementor-item-active"
+      },
+      {
+        "text": "About Us",
+        "href": "https://www.biyuboxing.com/about-us/",
+        "className": "elementor-item"
+      },
+      {
+        "text": "News",
+        "href": "https://www.biyuboxing.com/news/",
+        "className": "elementor-item"
+      },
+      {
+        "text": "Events",
+        "href": "https://www.biyuboxing.com/#",
+        "className": "elementor-item elementor-item-anchor has-submenu"
+      },
+      {
+        "text": "Upcoming Events",
+        "href": "https://www.biyuboxing.com/upcoming-events/",
+        "className": "elementor-sub-item"
+      },
+      {
+        "text": "Previous events",
+        "href": "https://www.biyuboxing.com/previous-events/",
+        "className": "elementor-sub-item"
+      },
+      {
+        "text": "Fighters",
+        "href": "https://www.biyuboxing.com/our-fighters/",
+        "className": "elementor-item"
+      },
+      {
+        "text": "Box for Us",
+        "href": "https://www.biyuboxing.com/the-box-for-us/",
+        "className": "elementor-item"
+      },
+      {
+        "text": "Contact Us",
+        "href": "https://www.biyuboxing.com/contact-us/",
+        "className": "elementor-item"
+      }
+    ],
+    "bodyClasses": "home wp-singular page-template-default page page-id-12 wp-embed-responsive wp-theme-hello-elementor eio-default ally-default hello-elementor-default elementor-default elementor-kit-4 elementor-page elementor-page-12 e--ua-blink e--ua-chrome e--ua-mac e--ua-webkit",
+    "bodyStyles": ""
+  }
+}

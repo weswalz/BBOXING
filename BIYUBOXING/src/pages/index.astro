@@ -1,0 +1,158 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/sections/Header.astro';
+import Footer from '../components/sections/Footer.astro';
+import UpcomingEvent from '../components/sections/UpcomingEvent.astro';
+---
+
+<Layout 
+  title="BiYu Promotions - Boxing Promotions in Houston, Texas"
+  description="Fighting For Legacy, Driven by Culture. Professional boxing promotion company based in Houston with operations in Tampa and Santo Domingo."
+>
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="biyu-hero">
+      <div class="biyu-hero-bg">
+        <img 
+          src="/images/home/boxerhero.jpg" 
+          alt="Professional boxer in training" 
+          loading="eager"
+        />
+      </div>
+      <div class="biyu-hero-overlay"></div>
+      
+      <div class="biyu-hero-content">
+        <h1 class="biyu-hero-title">
+          BIYU PROMOTIONS
+        </h1>
+        
+        <p class="biyu-hero-subtitle">
+          Fighting For Legacy, Driven by Culture
+        </p>
+      </div>
+    </section>
+    
+    <!-- Latest News Section -->
+    <section class="biyu-section biyu-section-dark">
+      <h2 class="biyu-title text-center">
+        <span class="biyu-title-yellow">latest</span> <span class="biyu-title-white">News</span>
+      </h2>
+      
+      <div class="biyu-news-grid">
+        <div class="biyu-news-image">
+          <img 
+            src="/images/news/eridson-garcia.jpg" 
+            alt="Dominican Republic super featherweight Eridson Garcia" 
+          />
+        </div>
+        
+        <div class="biyu-news-content">
+          <h3>Garcia reveals his intent ahead of<br>WBO NABO title fight</h3>
+          
+          <p class="mb-4">
+            Super featherweight <strong>Eridson Garcia</strong> (20-1) has revealed he has upped his preparations ahead of his headline WBO NABO title fight against Cristian Perez Hernandez (12-2) on Saturday September 6.
+          </p>
+          
+          <p class="mb-4">
+            The duo go head-to-head on the <strong>Gloves & Glory</strong> card being held at the Bert Ogden Arena in Edinburg, TX. The show, a joint venture between Marquez Promotions and BiYu Promotions, will be broadcast live on Box Azteca America and TV Azteca Texas.
+          </p>
+          
+          <p class="mb-4">
+            The Dominican Republic southpaw, ranked 13th by the WBA, has been working on specific areas while training in Houston ahead of the 10-round fight against his Mexican opponent.
+          </p>
+          
+          <blockquote class="biyu-quote mb-4">
+            "I've been developing some of my punches to work on in the fight. You can expect to see more development from me and you'll be able to see my skills and my performance in the ring. I have been doing everything necessary to come out with the victory on September 6th."
+          </blockquote>
+          
+          <p class="mb-4">
+            The Gloves & Glory undercard will also feature two other BiYu Promotions fighters.
+          </p>
+          
+          <p>
+            Unbeaten cruiserweight Chavon Stillwell (6-0) will take on Houston-based Nicholas Molina (7-3-1) for the ABO belt in a scheduled eight-rounder, while Dominican Republic featherweight Erick Rosado (15-3) has a tricky six round fight against unbeaten Adolfo Alanis (6-0).
+          </p>
+        </div>
+      </div>
+      
+      <div class="text-center mt-8">
+        <a href="/news/" class="biyu-btn">
+          See All News
+        </a>
+      </div>
+    </section>
+    
+    <!-- Upcoming Events Section -->
+    <UpcomingEvent />
+    
+    <!-- Box for Us Section -->
+    <section class="biyu-section-full-width biyu-box-section">
+      <div class="biyu-section-bg">
+        <img 
+          src="/images/home/Rectangle-10-30.png" 
+          alt="Box for Us Background" 
+        />
+      </div>
+      <div class="biyu-section-overlay"></div>
+      
+      <div class="biyu-section-content">
+        <div class="container mx-auto px-4">
+          <h2 class="biyu-title text-center biyu-title-yellow">
+            Box for us
+          </h2>
+          
+          <div class="max-w-4xl mx-auto text-center">
+            <p class="text-xl mb-8 text-gray-300">
+              If you are a talented boxer seeking to carve out a career in the professional ranks then BiYu Promotions want to hear from you.
+            </p>
+            
+            <a href="/contact-us/" class="biyu-btn">
+              Box for Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- BiYu Company Information Section -->
+    <section class="biyu-section biyu-section-dark">
+      <div class="biyu-box-layout">
+        <div class="biyu-box-main-image">
+          <img 
+            src="/images/home/gloves-hero.png" 
+            alt="BiYu Boxing Gloves" 
+            class="w-full rounded-lg"
+          />
+        </div>
+        
+        <div class="biyu-box-content-right">
+          <div class="text-center mb-6">
+            <img 
+              src="/images/logos/logo-white.png" 
+              alt="BiYu Promotions Logo" 
+              class="mx-auto max-w-xs mb-6"
+            />
+          </div>
+          
+          <div class="biyu-box-text">
+            <p class="mb-4">
+              BiYu Boxing Promotions has staged boxing events and developed boxing talent for more than 15 years.
+            </p>
+            
+            <p class="mb-4">
+              Founded by Bobby Harrison, a licensed boxing promoter and boxing manager, BIYU Promotions is the epitome of passion and global ambition with its headquarters in Houston, Texas, and offices in Tampa and Santo Domingo in the Dominican Republic.
+            </p>
+            
+            <p>
+              BiYu Promotions is part of a multi-brand organization, which also owns leisure and entertainment businesses including Gallo Loco, Gallo Loco Express, Steelhouse Grille, Club Hefe, El Padrino, Steam, and Chicas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>

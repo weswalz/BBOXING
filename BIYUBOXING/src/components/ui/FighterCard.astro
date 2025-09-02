@@ -1,0 +1,136 @@
+---
+export interface Props {
+  name: string;
+  nickname?: string;
+  record?: string;
+  weightClass?: string;
+  image?: string;
+  slug?: string;
+  titles?: string[];
+  status?: 'active' | 'retired' | 'prospect';
+}
+
+const { 
+  name, 
+  nickname,
+  record,
+  weightClass,
+  image = '/images/fighter-placeholder.jpg', 
+  slug,
+  titles = [],
+  status = 'active'
+} = Astro.props;
+
+const fighterUrl = slug ? `/our-fighters/${slug}/` : '#';
+
+const statusColors = {
+  active: 'badge-success',
+  retired: 'badge-neutral',
+  prospect: 'badge-primary'
+};
+
+const statusLabels = {
+  active: 'Active',
+  retired: 'Retired',
+  prospect: 'Prospect'
+};
+---
+
+<article class="combat-card rounded-lg overflow-hidden transition-all duration-300 group">
+  <div class="aspect-[3/4] bg-neutral-focus relative overflow-hidden">
+    <img 
+      src={image} 
+      alt={name}
+      class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+    
+    <div class="absolute top-4 left-4">
+      <span class={`champion-badge text-xs ${statusColors[status]}`}>
+        {statusLabels[status]}
+      </span>
+    </div>
+    
+    {titles.length > 0 && (
+      <div class="absolute top-4 right-4">
+        <div class="champion-badge">
+          CHAMPION
+        </div>
+      </div>
+    )}
+    
+    <div class="absolute bottom-0 left-0 right-0 p-6">
+      <h3 class="text-2xl champion-title text-white mb-1 group-hover:text-primary transition-colors boxing-glow">
+        <a href={fighterUrl} class="stretched-link">
+          {name}
+        </a>
+      </h3>
+      
+      {nickname && (
+        <p class="text-primary font-bold text-base mb-2 boxing-glow">
+          "{nickname}"
+        </p>
+      )}
+      
+      <div class="flex flex-wrap gap-2 text-sm text-white/95">
+        {record && (
+          <span class="bg-black/60 px-3 py-1 rounded-full font-semibold backdrop-blur-sm">
+            {record}
+          </span>
+        )}
+        {weightClass && (
+          <span class="bg-primary/20 text-primary px-3 py-1 rounded-full font-semibold backdrop-blur-sm">
+            {weightClass}
+          </span>
+        )}
+      </div>
+    </div>
+  </div>
+  
+  <div class="p-4">
+    {titles.length > 0 && (
+      <div class="mb-3">
+        <h4 class="text-sm font-semibold text-primary mb-1">Current Titles:</h4>
+        <div class="flex flex-wrap gap-1">
+          {titles.map((title) => (
+            <span class="badge badge-outline badge-sm text-xs">{title}</span>
+          ))}
+        </div>
+      </div>
+    )}
+    
+    <div class="flex items-center justify-between">
+      <a href={fighterUrl} class="text-sm text-primary font-semibold hover:text-primary-focus transition-colors">
+        View Profile
+        <svg class="w-4 h-4 ml-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+      
+      {status === 'active' && (
+        <div class="flex items-center text-success text-xs font-semibold">
+          <div class="w-2 h-2 bg-success rounded-full mr-2 animate-pulse"></div>
+          Active Fighter
+        </div>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .stretched-link {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .stretched-link::before {
+    content: '';
+    position: absolute;
+    top: -6rem;
+    left: -1.5rem;
+    right: -1.5rem;
+    bottom: -1rem;
+    z-index: -1;
+  }
+</style>

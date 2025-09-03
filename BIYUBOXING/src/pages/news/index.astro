@@ -1,0 +1,88 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/sections/Header.astro';
+import Footer from '../../components/sections/Footer.astro';
+
+const newsArticles = [
+  {
+    title: "'Silent Assassin' Chavon Stillwell signs for BiYu Promotions",
+    excerpt: "Big-hitting cruiserweight tipped for world title",
+    date: "November 2024",
+    image: "/images/ChavonStillwell-news.webp"
+  },
+  {
+    title: "BiYu trio to box on Gloves & Glory card",
+    excerpt: "Eridson Garcia vs Cristian Perez Hernandez for the WBO NABO Super Featherweight title on September 6 at Bert Ogden Arena, Edinburg, TX",
+    date: "August 2024",
+    image: "/images/glovesandglory.webp"
+  },
+  {
+    title: "Treble success for BiYu fighters in Colombia",
+    excerpt: "Chavon Davis, Rafael Abreu, and Eliesel Rodriguez Ledesma all extended their unbeaten records",
+    date: "July 2024",
+    image: "/images/treblesuccess.webp"
+  },
+  {
+    title: "Garcia ready to put down a marker ahead of TKO switch",
+    excerpt: "Garcia returns after 9 months at the first BiYu Brawl in Houston",
+    date: "June 2024",
+    image: "/images/garciaready.webp"
+  }
+];
+---
+
+<Layout 
+  title="News - BiYu Promotions | Latest Boxing News & Updates" 
+  description="Stay updated with the latest boxing news from BiYu Promotions. Fighter signings, fight results, upcoming events, and exclusive updates."
+>
+  <Header />
+  
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">
+      <div class="absolute inset-0 z-0">
+        <img 
+          src="/images/newshero.webp" 
+          alt="BiYu Promotions News" 
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+      </div>
+      
+      <div class="relative z-10 container mx-auto px-4 text-center">
+        <h1 class="text-5xl md:text-7xl font-display font-bold mb-6 hero-text boxing-glow">
+          NEWS
+        </h1>
+      </div>
+    </section>
+
+    <!-- News Articles Section -->
+    <section class="py-16 bg-base-100">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+          <div class="grid gap-8">
+            {newsArticles.map((article) => (
+              <article class="card lg:card-side bg-base-200 shadow-xl">
+                <figure class="lg:w-2/5">
+                  <img 
+                    src={article.image} 
+                    alt={article.title}
+                    class="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </figure>
+                <div class="card-body lg:w-3/5">
+                  <p class="text-sm text-primary font-semibold">{article.date}</p>
+                  <h2 class="card-title text-2xl font-display">{article.title}</h2>
+                  <p class="text-lg">{article.excerpt}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/sections/Header.astro';
+import Footer from '../../components/sections/Footer.astro';
+---
+
+<Layout 
+  title="Upcoming Events - BiYu Promotions | Boxing Events Schedule" 
+  description="Check out BiYu Promotions' upcoming boxing events. Championship fights and world-class boxing entertainment."
+>
+  <Header />
+  
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">
+      <div class="absolute inset-0 z-0">
+        <img 
+          src="/images/upcomingeventshero.webp" 
+          alt="Upcoming Boxing Events" 
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+      </div>
+      
+      <div class="relative z-10 container mx-auto px-4 text-center">
+        <h1 class="text-5xl md:text-7xl font-display font-bold mb-6 hero-text boxing-glow">
+          UPCOMING EVENTS
+        </h1>
+      </div>
+    </section>
+
+    <!-- Events Content -->
+    <section class="py-16 bg-base-100">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <p class="text-xl mb-8">
+            Stay tuned for announcements of our upcoming boxing events featuring BiYu Promotions fighters.
+          </p>
+          
+          <p class="text-lg mb-12">
+            BiYu Promotions hosts regular boxing events in Houston, Dominican Republic, and across the Americas. 
+            Follow us for the latest updates on fight cards and ticket information.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/contact-us/" class="btn btn-primary btn-lg">
+              Join VIP List
+            </a>
+            <a href="/events/previous/" class="btn btn-outline btn-lg">
+              View Past Events
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

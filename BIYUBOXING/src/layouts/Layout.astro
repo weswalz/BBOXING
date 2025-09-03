@@ -2,7 +2,8 @@
 // Import CSS files
 import '../styles/global.css';
 import '../styles/biyu.css';
-import '../styles/biyu.css';
+import '../styles/responsive.css';
+import SEO from '../components/SEO.astro';
 
 export interface Props {
   title?: string;
@@ -15,19 +16,21 @@ export interface Props {
   modifiedTime?: string;
   author?: string;
   section?: string;
+  canonical?: string;
 }
 
 const { 
-  title = "Biyu Boxing - Premier Boxing Promotion",
-  description = "World-class boxing promotion featuring championship fighters, exclusive events, and professional boxing entertainment across multiple continents.",
-  image = "/images/og-image.jpg",
+  title = "BiYu Promotions - Professional Boxing Management & Promotion",
+  description = "BiYu Promotions: Professional boxing promotion company developing world-class fighters. Founded by Bobby Harrison with 15+ years experience. Offices in Houston, Tampa & Santo Domingo.",
+  image = "/images/logos/logo-white.png",
   noIndex = false,
-  keywords = ["boxing", "professional boxing", "championship fights", "biyu boxing", "boxing promotion"],
+  keywords = ["boxing promotions", "professional boxing", "Bobby Harrison", "BiYu Boxing", "boxing management", "Houston boxing", "Dominican Republic boxing"],
   articleType = "website",
   publishedTime,
   modifiedTime,
   author,
-  section
+  section,
+  canonical
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -59,58 +62,48 @@ const organizationStructuredData = {
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		
-		<!-- Enhanced SEO Meta Tags -->
-		<title>{title}</title>
-		<meta name="description" content={description} />
+		<!-- Core Web Vitals Optimization -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+		
+		<!-- SEO Component -->
+		<SEO 
+			title={title}
+			description={description}
+			image={image}
+			canonical={canonical}
+			noindex={noIndex}
+			article={publishedTime ? {
+				publishedTime,
+				modifiedTime,
+				author,
+				section
+			} : undefined}
+			type={articleType}
+		/>
+		
+		<!-- Preserve existing SEO equity with fallback meta tags -->
 		<meta name="keywords" content={metaKeywords} />
-		<meta name="author" content={author || "Biyu Boxing"} />
-		<link rel="canonical" href={canonicalURL} />
-		
-		<!-- Open Graph Meta Tags -->
-		<meta property="og:type" content={articleType} />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:image" content={fullImageURL} />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta property="og:url" content={canonicalURL} />
-		<meta property="og:site_name" content="Biyu Boxing" />
-		<meta property="og:locale" content="en_US" />
-		{publishedTime && <meta property="article:published_time" content={publishedTime} />}
-		{modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
-		{author && <meta property="article:author" content={author} />}
-		{section && <meta property="article:section" content={section} />}
-		
-		<!-- Twitter Card Meta Tags -->
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:site" content="@biyuboxing" />
-		<meta name="twitter:creator" content="@biyuboxing" />
-		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={fullImageURL} />
-		<meta name="twitter:image:alt" content={title} />
-		
-		<!-- Additional SEO Meta Tags -->
-		<meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
-		<meta name="googlebot" content={noIndex ? "noindex, nofollow" : "index, follow"} />
-		<meta name="bingbot" content={noIndex ? "noindex, nofollow" : "index, follow"} />
 		
 		<!-- Performance and Security -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="referrer" content="strict-origin-when-cross-origin" />
 		
-		<!-- Preload Critical Resources -->
+		<!-- Critical Performance Optimizations -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link rel="dns-prefetch" href="//www.google-analytics.com" />
-		<link rel="dns-prefetch" href="//fonts.googleapis.com" />
 		
-		<!-- Preload critical CSS fonts -->
-		<link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Russo+One&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-		<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Russo+One&display=swap" /></noscript>
+		<!-- Optimize font loading for Core Web Vitals -->
+		<link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Russo+One&display=swap" as="style" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Russo+One&display=swap" media="print" onload="this.media='all'" />
+		<noscript>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Russo+One&display=swap" />
+		</noscript>
 		
-		<!-- Organization Structured Data -->
-		<script type="application/ld+json" set:html={JSON.stringify(organizationStructuredData)} />
+		<!-- Favicon set for all devices -->
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 		
 		<!-- Web App Manifest -->
 		<link rel="manifest" href="/site.webmanifest" />
@@ -119,7 +112,7 @@ const organizationStructuredData = {
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 	</head>
-	<body class="min-h-screen bg-base-100 text-base-content font-sans antialiased">
+	<body class="min-h-screen bg-base-100 text-base-content font-sans antialiased" data-instant-intensity="viewport">
 		<slot />
 	</body>
 </html>

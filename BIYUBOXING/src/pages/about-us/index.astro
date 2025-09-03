@@ -2,258 +2,110 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/sections/Header.astro';
 import Footer from '../../components/sections/Footer.astro';
-import BoxForUsCTA from '../../components/ui/BoxForUsCTA.astro';
 ---
 
 <Layout 
-  title="About Us - Biyu Promotions" 
-  description="Learn about Biyu Promotions' mission, history, and commitment to excellence in boxing promotion and fighter development across Houston, Tampa, and Santo Domingo."
+  title="About Us - BiYu Promotions | Professional Boxing Promotion" 
+  description="BiYu Promotions is a multi-brand organization led by Bobby Harrison. With offices in Houston, Tampa, and Santo Domingo, we're dedicated to developing world-class fighters."
 >
   <Header />
   
   <main class="min-h-screen">
-    <div class="container mx-auto px-4 py-16">
-      <h1 class="text-5xl font-display font-bold text-center mb-8 hero-text boxing-glow">
-        About Biyu Promotions
-      </h1>
-      
-      <div class="prose prose-lg max-w-4xl mx-auto text-base-content">
-        <p class="text-xl text-center mb-12 opacity-90 font-semibold text-primary">
-          Fighting For Legacy, Driven by Culture
-        </p>
-        
-        <!-- Company Overview -->
-        <section class="mb-16">
-          <h2 class="text-3xl font-display font-bold mb-6 text-primary">Our Story</h2>
-          
-          <!-- Hero Image -->
-          <div class="mb-8">
-            <img 
-              src="/images/about/backdrop-shot.jpg" 
-              alt="Biyu Promotions professional boxing facility and training environment" 
-              class="w-full h-64 md:h-80 object-cover rounded-lg shadow-xl"
-              loading="lazy"
-            />
-          </div>
-          
-          <p class="text-lg leading-relaxed mb-6">
-            Biyu Promotions stands at the forefront of professional boxing promotion, dedicated to developing world-class fighters 
-            and delivering exceptional entertainment to boxing fans worldwide. Founded with a vision to honor the rich legacy of 
-            boxing while embracing the diverse cultures that make this sport truly global, we've established ourselves as a 
-            premier promotion company with operations spanning multiple continents.
-          </p>
-          
-          <p class="text-lg leading-relaxed mb-6">
-            Our name "Biyu" reflects our commitment to the beautiful art of boxing – where technical mastery meets raw determination, 
-            and where fighters from all backgrounds can showcase their skills on the world stage. We believe that every fighter 
-            has a unique story to tell, and we're here to help them write their legacy in the ring.
-          </p>
-        </section>
-
-        <!-- Experience & Achievements -->
-        <section class="mb-16">
-          <h2 class="text-3xl font-display font-bold mb-6 text-primary">Experience & Achievements</h2>
-          <p class="text-lg leading-relaxed mb-6">
-            With over two decades of combined experience in boxing promotion, our team has orchestrated some of the most 
-            memorable fights in recent boxing history. We've promoted championship bouts, developed rising stars, and 
-            created opportunities for fighters to achieve their dreams of boxing greatness.
-          </p>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div class="text-center combat-card rounded-lg p-6">
-              <div class="text-4xl font-bold text-primary mb-2 boxing-glow">200+</div>
-              <div class="text-base-content/80 font-medium">Events Promoted</div>
-            </div>
-            <div class="text-center combat-card rounded-lg p-6">
-              <div class="text-4xl font-bold text-primary mb-2 boxing-glow">50+</div>
-              <div class="text-base-content/80 font-medium">Active Fighters</div>
-            </div>
-            <div class="text-center combat-card rounded-lg p-6">
-              <div class="text-4xl font-bold text-primary mb-2 boxing-glow">15+</div>
-              <div class="text-base-content/80 font-medium">Championship Belts</div>
-            </div>
-            <div class="text-center combat-card rounded-lg p-6">
-              <div class="text-4xl font-bold text-primary mb-2 boxing-glow">3</div>
-              <div class="text-base-content/80 font-medium">Global Locations</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Strategic Partners -->
-        <section class="mb-16">
-          <h2 class="text-3xl font-display font-bold mb-6 text-primary">Strategic Partners</h2>
-          <p class="text-lg leading-relaxed mb-8">
-            Our success is built on strong relationships with industry leaders, legendary fighters, and premier broadcasting partners 
-            who share our vision for the future of boxing.
-          </p>
-          
-          <div class="mb-8">
-            <h3 class="text-2xl font-semibold mb-4 text-primary">Boxing Legends & Advisors</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div class="combat-card rounded-lg p-6">
-                <h4 class="text-xl font-bold mb-2">Juan Diaz</h4>
-                <p class="text-base-content/80">Former 2-time World Champion, Strategic Advisor</p>
-              </div>
-              <div class="combat-card rounded-lg p-6">
-                <h4 class="text-xl font-bold mb-2">Reggie Johnson</h4>
-                <p class="text-base-content/80">Former World Champion, Fighter Development</p>
-              </div>
-              <div class="combat-card rounded-lg p-6">
-                <h4 class="text-xl font-bold mb-2">Shawn Porter</h4>
-                <p class="text-base-content/80">Former World Champion, Brand Ambassador</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="mb-8">
-            <h3 class="text-2xl font-semibold mb-4 text-primary">Broadcasting & Media Partners</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div class="combat-card rounded-lg p-6 text-center">
-                <h4 class="text-xl font-bold mb-2">DAZN</h4>
-                <p class="text-base-content/80">Global Streaming Partner</p>
-              </div>
-              <div class="combat-card rounded-lg p-6 text-center">
-                <h4 class="text-xl font-bold mb-2">beIN Sports</h4>
-                <p class="text-base-content/80">International Broadcasting</p>
-              </div>
-              <div class="combat-card rounded-lg p-6 text-center">
-                <h4 class="text-xl font-bold mb-2">Fite TV</h4>
-                <p class="text-base-content/80">Pay-Per-View Platform</p>
-              </div>
-              <div class="combat-card rounded-lg p-6 text-center">
-                <h4 class="text-xl font-bold mb-2">Various Networks</h4>
-                <p class="text-base-content/80">Regional Partners</p>
-              </div>
-            </div>
-          </div>
-          
-          <div>
-            <h3 class="text-2xl font-semibold mb-4 text-primary">Sanctioning Bodies</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="combat-card rounded-lg p-6 text-center">
-                <h4 class="text-xl font-bold mb-2">WBC</h4>
-                <p class="text-base-content/80">World Boxing Council - Official Partner</p>
-              </div>
-              <div class="combat-card rounded-lg p-6 text-center">
-                <h4 class="text-xl font-bold mb-2">WBA</h4>
-                <p class="text-base-content/80">World Boxing Association - Official Partner</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Global Presence -->
-        <section class="mb-16">
-          <h2 class="text-3xl font-display font-bold mb-6 text-primary">Global Presence</h2>
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="combat-card rounded-lg p-8">
-              <h3 class="text-2xl font-bold mb-4 text-primary">Houston, TX</h3>
-              <p class="text-base-content/80 mb-2 font-semibold">Headquarters</p>
-              <p class="text-base-content/80 leading-relaxed">
-                Our main operations center located in the heart of Texas, managing North American 
-                promotions, fighter development, and corporate strategy.
-              </p>
-            </div>
-            
-            <div class="combat-card rounded-lg p-8">
-              <h3 class="text-2xl font-bold mb-4 text-primary">Tampa, FL</h3>
-              <p class="text-base-content/80 mb-2 font-semibold">East Coast Operations</p>
-              <p class="text-base-content/80 leading-relaxed">
-                Strategic location for East Coast events, media relations, and partnership 
-                management with major television networks and streaming platforms.
-              </p>
-            </div>
-            
-            <div class="combat-card rounded-lg p-8">
-              <h3 class="text-2xl font-bold mb-4 text-primary">Santo Domingo, DR</h3>
-              <p class="text-base-content/80 mb-2 font-semibold">Caribbean & Latin America Hub</p>
-              <p class="text-base-content/80 leading-relaxed">
-                Developing the incredible boxing talent from the Dominican Republic and 
-                throughout Latin America, connecting fighters to international opportunities.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Dominican Republic Boxing Showcase -->
-        <section class="mb-16">
-          <h2 class="text-3xl font-display font-bold mb-6 text-primary">Dominican Republic Boxing Excellence</h2>
-          
-          <!-- In-Ring Action Image -->
-          <div class="mb-8">
-            <img 
-              src="/images/about/in-ring-action.jpg" 
-              alt="Professional boxers in training and in-ring action at Biyu Promotions" 
-              class="w-full h-64 md:h-80 object-cover rounded-lg shadow-xl"
-              loading="lazy"
-            />
-          </div>
-          
-          <p class="text-lg leading-relaxed mb-6">
-            The Dominican Republic has long been recognized as a powerhouse in boxing, producing world-class fighters who 
-            combine technical skill with unwavering determination. Our Santo Domingo operations center serves as a gateway 
-            for Dominican and Caribbean talent to reach the international stage.
-          </p>
-          
-          <p class="text-lg leading-relaxed mb-6">
-            We're proud to showcase the rich boxing culture of the Dominican Republic, where the sport is more than 
-            entertainment – it's a path to opportunity, respect, and national pride. Our commitment extends beyond 
-            individual fighters to supporting the entire boxing ecosystem in the region.
-          </p>
-          
-          <div class="combat-card rounded-lg p-8 mb-8">
-            <h3 class="text-2xl font-semibold mb-4 text-primary">Dominican Boxing Development Program</h3>
-            <ul class="list-disc list-inside space-y-2 text-base-content/80">
-              <li>Amateur boxing support and development initiatives</li>
-              <li>Professional pathway programs for emerging talent</li>
-              <li>Training facility partnerships and equipment provision</li>
-              <li>Educational workshops on professional boxing careers</li>
-              <li>Cultural exchange programs with international fighters</li>
-            </ul>
-          </div>
-        </section>
-
-        <!-- Core Values -->
-        <section class="mb-16">
-          <h2 class="text-3xl font-display font-bold mb-6 text-primary">Our Core Aims</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="combat-card rounded-lg p-8">
-              <h3 class="text-xl font-bold mb-4 text-primary">Fighter Development</h3>
-              <p class="text-base-content/80 leading-relaxed">
-                Providing comprehensive support for fighters at every stage of their career, from 
-                emerging prospects to world champions, ensuring they have the resources to succeed.
-              </p>
-            </div>
-            
-            <div class="combat-card rounded-lg p-8">
-              <h3 class="text-xl font-bold mb-4 text-primary">Cultural Celebration</h3>
-              <p class="text-base-content/80 leading-relaxed">
-                Honoring the diverse cultural backgrounds that make boxing a truly global sport, 
-                while creating platforms for fighters to represent their heritage with pride.
-              </p>
-            </div>
-            
-            <div class="combat-card rounded-lg p-8">
-              <h3 class="text-xl font-bold mb-4 text-primary">Entertainment Excellence</h3>
-              <p class="text-base-content/80 leading-relaxed">
-                Delivering world-class boxing events that captivate audiences and create lasting 
-                memories while maintaining the highest standards of professionalism and safety.
-              </p>
-            </div>
-            
-            <div class="combat-card rounded-lg p-8">
-              <h3 class="text-xl font-bold mb-4 text-primary">Legacy Building</h3>
-              <p class="text-base-content/80 leading-relaxed">
-                Creating opportunities for fighters to build lasting legacies that extend beyond 
-                their careers, inspiring the next generation of boxing champions.
-              </p>
-            </div>
-          </div>
-        </section>
+    <!-- Hero Section -->
+    <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">
+      <div class="absolute inset-0 z-0">
+        <img 
+          src="/images/aboutushero.webp" 
+          alt="About BiYu Promotions" 
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
       </div>
-    </div>
+      
+      <div class="relative z-10 container mx-auto px-4 text-center">
+        <h1 class="text-5xl md:text-7xl font-display font-bold mb-6 hero-text boxing-glow">
+          ABOUT US
+        </h1>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-16 bg-base-100">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <!-- Feature Image -->
+          <div class="mb-12">
+            <img 
+              src="/images/aboutusfeature.webp" 
+              alt="BiYu Promotions Team" 
+              class="w-full rounded-lg shadow-xl"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- Company Overview -->
+          <div class="prose prose-lg max-w-none">
+            <p class="text-lg mb-6">
+              BiYu Promotions is a multi-brand organization dedicated to the sport of Boxing and is led by licensed promoter and manager Bobby Harrison. Harrison brings fifteen years of experience in Boxing and has been involved in entertainment for over 30 years. The organization includes various entertainment businesses and is now headquartered in Houston, Texas with offices in Tampa, Florida and Santo Domingo, Dominican Republic.
+            </p>
+
+            <h2 class="text-3xl font-display font-bold mb-6 text-primary">Our Assets</h2>
+            
+            <p class="text-lg mb-6">
+              BiYu houses the BiYu Training Complex in Houston where professional and amateur fighters train under some of the best trainers in boxing. The facility also houses our television production and event day management crews who have developed working relationships with many of the premier venues around the country and world.
+            </p>
+
+            <p class="text-lg mb-6">
+              BiYu now has a dedicated office in the Dominican Republic with the aim to build upon the incredible success the Dominican Republic has had in developing fighters with a long-term focus on building facilities and training young fighters from humble beginnings.
+            </p>
+
+            <h2 class="text-3xl font-display font-bold mb-6 text-primary">Our Partners</h2>
+            
+            <p class="text-lg mb-6">
+              BiYu Promotions is proud to have worked with world champions such as Juan Diaz, Reggie Johnson and more recently Sean Porter. Additionally, we have developed relationships with world renowned sanctioning bodies such as the WBC and WBA as well as premier networks DAZN, beIN Sports and Fite TV.
+            </p>
+
+            <h2 class="text-3xl font-display font-bold mb-6 text-primary">Our Experience</h2>
+            
+            <div class="mb-12">
+              <img 
+                src="/images/ourexperience.webp" 
+                alt="BiYu Promotions Boxing Events" 
+                class="w-full rounded-lg shadow-xl"
+                loading="lazy"
+              />
+            </div>
+
+            <p class="text-lg mb-6">
+              BiYu Promotions and its brand companies bring audiences jaw-dropping boxing action around the world. Our events feature top-tier fighters, champions and contenders, showcasing the best of professional boxing. From Houston to Santo Domingo to venues across the Americas, we deliver unforgettable fight nights that celebrate the sport's rich tradition while building its future.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-gradient-to-br from-primary/10 to-base-200">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-display font-bold mb-6 text-primary">
+            Join Our Journey
+          </h2>
+          <p class="text-lg mb-8">
+            Whether you're a fighter looking to advance your career or a fan seeking the best in boxing entertainment, BiYu Promotions is your gateway to the world of professional boxing.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/box-for-us/" class="btn btn-primary btn-lg">
+              Box For Us
+            </a>
+            <a href="/contact-us/" class="btn btn-outline btn-lg">
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  
   <Footer />
 </Layout>

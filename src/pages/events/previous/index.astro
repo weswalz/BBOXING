@@ -1,0 +1,76 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/sections/Header.astro';
+import Footer from '../../../components/sections/Footer.astro';
+
+const previousEvents = [
+  {
+    title: "BiYu Brawl April 26th",
+    date: "April 26, 2024",
+    venue: "Houston, TX",
+    image: "/images/biyubrawlapril26th.webp"
+  },
+  {
+    title: "Torres Event July 3rd",
+    date: "July 3, 2024",
+    venue: "Houston, TX",
+    image: "/images/torresjuly3rd.webp"
+  }
+];
+---
+
+<Layout 
+  title="Previous Events - BiYu Promotions | Past Boxing Events" 
+  description="View BiYu Promotions' previous boxing events. Championship fights, memorable moments, and fight results from our past events."
+>
+  <Header />
+  
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">
+      <div class="absolute inset-0 z-0">
+        <img 
+          src="/images/previouseventshero.webp" 
+          alt="Previous Boxing Events" 
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+      </div>
+      
+      <div class="relative z-10 container mx-auto px-4 text-center">
+        <h1 class="text-5xl md:text-7xl font-display font-bold mb-6 hero-text boxing-glow">
+          PREVIOUS EVENTS
+        </h1>
+      </div>
+    </section>
+
+    <!-- Events Grid -->
+    <section class="py-16 bg-base-100">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+          <div class="grid md:grid-cols-2 gap-8">
+            {previousEvents.map((event) => (
+              <div class="card bg-base-200 shadow-xl overflow-hidden">
+                <figure class="h-64">
+                  <img 
+                    src={event.image} 
+                    alt={event.title}
+                    class="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </figure>
+                <div class="card-body">
+                  <h2 class="card-title text-2xl font-display">{event.title}</h2>
+                  <p class="text-lg">{event.date}</p>
+                  <p class="text-base-content/80">{event.venue}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

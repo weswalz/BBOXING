@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/sections/Header.astro';
+import Footer from '../../components/sections/Footer.astro';
+---
+
+<Layout 
+  title="About Us - BiYu Promotions | Professional Boxing Promotion" 
+  description="BiYu Promotions is a multi-brand organization led by Bobby Harrison. With offices in Houston, Tampa, and Santo Domingo, we're dedicated to developing world-class fighters."
+>
+  <Header />
+  
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">
+      <div class="absolute inset-0 z-0">
+        <img 
+          src="/images/aboutushero.webp" 
+          alt="About BiYu Promotions" 
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+      </div>
+      
+      <div class="relative z-10 container mx-auto px-4 text-center">
+        <h1 class="text-5xl md:text-7xl font-display font-bold mb-6 hero-text boxing-glow">
+          ABOUT US
+        </h1>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-16 bg-base-100">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <!-- Feature Image -->
+          <div class="mb-12">
+            <img 
+              src="/images/aboutusfeature.webp" 
+              alt="BiYu Promotions Team" 
+              class="w-full rounded-lg shadow-xl"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- Company Overview -->
+          <div class="prose prose-lg max-w-none">
+            <p class="text-lg mb-6">
+              BiYu Promotions is a multi-brand organization dedicated to the sport of Boxing and is led by licensed promoter and manager Bobby Harrison. Harrison brings fifteen years of experience in Boxing and has been involved in entertainment for over 30 years. The organization includes various entertainment businesses and is now headquartered in Houston, Texas with offices in Tampa, Florida and Santo Domingo, Dominican Republic.
+            </p>
+
+            <h2 class="text-3xl font-display font-bold mb-6 text-primary">Our Assets</h2>
+            
+            <p class="text-lg mb-6">
+              BiYu houses the BiYu Training Complex in Houston where professional and amateur fighters train under some of the best trainers in boxing. The facility also houses our television production and event day management crews who have developed working relationships with many of the premier venues around the country and world.
+            </p>
+
+            <p class="text-lg mb-6">
+              BiYu now has a dedicated office in the Dominican Republic with the aim to build upon the incredible success the Dominican Republic has had in developing fighters with a long-term focus on building facilities and training young fighters from humble beginnings.
+            </p>
+
+            <h2 class="text-3xl font-display font-bold mb-6 text-primary">Our Partners</h2>
+            
+            <p class="text-lg mb-6">
+              BiYu Promotions is proud to have worked with world champions such as Juan Diaz, Reggie Johnson and more recently Sean Porter. Additionally, we have developed relationships with world renowned sanctioning bodies such as the WBC and WBA as well as premier networks DAZN, beIN Sports and Fite TV.
+            </p>
+
+            <h2 class="text-3xl font-display font-bold mb-6 text-primary">Our Experience</h2>
+            
+            <div class="mb-12">
+              <img 
+                src="/images/ourexperience.webp" 
+                alt="BiYu Promotions Boxing Events" 
+                class="w-full rounded-lg shadow-xl"
+                loading="lazy"
+              />
+            </div>
+
+            <p class="text-lg mb-6">
+              BiYu Promotions and its brand companies bring audiences jaw-dropping boxing action around the world. Our events feature top-tier fighters, champions and contenders, showcasing the best of professional boxing. From Houston to Santo Domingo to venues across the Americas, we deliver unforgettable fight nights that celebrate the sport's rich tradition while building its future.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-gradient-to-br from-primary/10 to-base-200">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-display font-bold mb-6 text-primary">
+            Join Our Journey
+          </h2>
+          <p class="text-lg mb-8">
+            Whether you're a fighter looking to advance your career or a fan seeking the best in boxing entertainment, BiYu Promotions is your gateway to the world of professional boxing.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/box-for-us/" class="btn btn-primary btn-lg">
+              Box For Us
+            </a>
+            <a href="/contact-us/" class="btn btn-outline btn-lg">
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

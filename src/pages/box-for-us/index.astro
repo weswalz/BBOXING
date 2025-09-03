@@ -1,0 +1,113 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/sections/Header.astro';
+import Footer from '../../components/sections/Footer.astro';
+import ContactForm from '../../components/ui/ContactForm.astro';
+---
+
+<Layout 
+  title="Box for Us - BiYu Promotions | Professional Boxing Career" 
+  description="Take your boxing career to the next level with BiYu Promotions. Professional management, world-class training facilities, and career development opportunities."
+>
+  <Header />
+  
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">
+      <div class="absolute inset-0 z-0">
+        <img 
+          src="/images/boxforushero.webp" 
+          alt="Box for BiYu Promotions" 
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+      </div>
+      
+      <div class="relative z-10 container mx-auto px-4 text-center">
+        <h1 class="text-5xl md:text-7xl font-display font-bold mb-6 hero-text boxing-glow">
+          BOX FOR US
+        </h1>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-16 bg-base-100">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <!-- Background Image Section -->
+          <div class="mb-12">
+            <img 
+              src="/images/careerbackground.webp" 
+              alt="Boxing Career with BiYu" 
+              class="w-full rounded-lg shadow-xl"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="prose prose-lg max-w-none">
+            <h2 class="text-3xl font-display font-bold mb-6 text-primary">Career</h2>
+            
+            <p class="text-lg mb-6">
+              If you are a talented boxer seeking to carve out a career in the professional ranks then BiYu Promotions wants to hear from you.
+            </p>
+
+            <p class="text-lg mb-6">
+              BiYu Promotions offers boxers the opportunity to advance their professional boxing careers via management, promotion and career development.
+            </p>
+
+            <p class="text-lg mb-6">
+              With access to top trainers, BiYu also offers matchmaking services to assist with your progress in the rankings and securing fights as well as title shots.
+            </p>
+
+            <h2 class="text-3xl font-display font-bold mb-6 text-primary">Facilities</h2>
+            
+            <p class="text-lg mb-6">
+              We house a dedicated training facility at our Legions Training Complex in Houston that provides everything a fighter needs to hone their skills and prepare for competition.
+            </p>
+
+            <p class="text-lg mb-6">
+              We even have living accommodation in Houston that can support fighters who may need to relocate to advance their careers.
+            </p>
+
+            <p class="text-lg mb-6">
+              BiYu Promotions runs regular boxing events in Houston, Dominican Republic and South America and our fighters have the opportunity to fight locally and internationally.
+            </p>
+
+            <h2 class="text-3xl font-display font-bold mb-6 text-primary">Leadership</h2>
+            
+            <p class="text-lg mb-6">
+              BiYu Promotions is led by its CEO's Bobby Harrison and Rene Sanchez. Combined, the duo has over 40 years of experience in the sport and have travelled the world with iconic champions. They now bring their passion for the sport to BiYu Promotions and aim to continue their long track record of success.
+            </p>
+
+            <p class="text-lg mb-6">
+              Already the pair are managing 2 world title contenders in the form of Marquis Taylor, who is currently ranked 13th by the WBC at Middleweight and Eridson Garcia who is ranked 13th by the WBA at Super Featherweight.
+            </p>
+
+            <p class="text-lg mb-6">
+              Additionally, they are managing Heavyweight Contender Wilfred Buelvas and a host of undefeated talent such as Rafael Abreu, Chavon Stillwell and Eliesel Rodriguez Ledesma and a host of fighters who are on their way up in the sport.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Application Form Section -->
+    <section class="py-16 bg-gradient-to-br from-primary/10 to-base-200">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-4xl font-display font-bold text-center mb-8 text-primary">
+            Apply to Join BiYu Promotions
+          </h2>
+          
+          <p class="text-lg text-center mb-12">
+            Ready to take your boxing career to the next level? Fill out the form below and our team will be in touch.
+          </p>
+
+          <ContactForm variant="fighter" />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

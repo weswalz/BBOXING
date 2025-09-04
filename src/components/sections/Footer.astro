@@ -1,63 +1,11 @@
 ---
 // Footer component with site links and company info
+import VipSignup from './VipSignup.astro';
 ---
 
 <footer class="glass-footer text-neutral-content">
-  <!-- VIP List Section -->
-  <div class="biyu-vip-section">
-    <div class="biyu-vip-content">
-      <div class="biyu-vip-form-container">
-        <h3 class="biyu-vip-title">
-          Join The VIP List
-        </h3>
-        <p class="biyu-vip-subtitle">
-          GET EVENTS, NEWS AND PROMOTIONS DELIVERED TO YOUR INBOX!
-        </p>
-        
-        <form class="biyu-vip-form">
-          <input 
-            type="email" 
-            name="email"
-            placeholder="Email address" 
-            class="biyu-vip-input"
-            required
-          />
-          <input 
-            type="text" 
-            name="firstName"
-            placeholder="First Name" 
-            class="biyu-vip-input"
-          />
-          <input 
-            type="text" 
-            name="lastName"
-            placeholder="Last Name" 
-            class="biyu-vip-input"
-          />
-          <input 
-            type="text" 
-            name="birthday"
-            placeholder="Birthday (MM / DD / YYYY)" 
-            class="biyu-vip-input"
-          />
-          <button 
-            type="submit" 
-            class="biyu-btn biyu-vip-submit"
-          >
-            Sign up
-          </button>
-        </form>
-      </div>
-      
-      <div class="biyu-vip-image">
-        <img 
-          src="/images/home/gloves-hero.png" 
-          alt="Boxing Silhouette" 
-          class="biyu-boxer-silhouette"
-        />
-      </div>
-    </div>
-  </div>
+  <!-- VIP Signup Section -->
+  <VipSignup />
   
   <!-- Main Footer Content -->
   <div class="container mx-auto px-4 py-16">

@@ -1,7 +1,7 @@
 {
-  "name": "Biyu Boxing - Premier Boxing Promotion",
-  "short_name": "Biyu Boxing",
-  "description": "World-class boxing promotion featuring championship fighters, exclusive events, and professional boxing entertainment across multiple continents.",
+  "name": "BiYu Promotions - Elite Boxing Talent Development",
+  "short_name": "BiYu Boxing",
+  "description": "Professional boxing promotion company specializing in developing elite fighters for major boxing organizations. Founded by Bobby Harrison with 15+ years experience.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
@@ -49,7 +49,7 @@
       "name": "Our Fighters",
       "short_name": "Fighters",
       "description": "View our roster of world-class boxers",
-      "url": "/our-fighters/",
+      "url": "/fighters/",
       "icons": [
         {
           "src": "/images/icons/fighters-icon.png",
@@ -62,7 +62,7 @@
       "name": "Upcoming Events",
       "short_name": "Events", 
       "description": "Check out upcoming boxing matches",
-      "url": "/upcoming-events/",
+      "url": "/events/",
       "icons": [
         {
           "src": "/images/icons/events-icon.png",

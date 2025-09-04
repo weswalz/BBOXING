@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/sections/Header.astro';
 import Footer from '../../components/sections/Footer.astro';
-import FighterCard from '../../components/ui/FighterCard.astro';
+import BoxForUsSection from '../../components/sections/BoxForUsSection.astro';
 
 const fighters = [
   { 
@@ -11,6 +11,8 @@ const fighters = [
     nationality: "USA", 
     weightClass: "Middleweight",
     image: "/images/MarquisTaylor.webp",
+    flag: "/images/USAflag.webp",
+    wins: "18", losses: "1", draws: "2", kos: "3"
   },
   { 
     name: "Michael Chaise Nelson", 
@@ -18,6 +20,8 @@ const fighters = [
     nationality: "USA", 
     weightClass: "Featherweight",
     image: "/images/MichaelChaiseNelson.webp",
+    flag: "/images/USAflag.webp",
+    wins: "21", losses: "3", draws: "1", kos: "8"
   },
   { 
     name: "Eridson Garcia", 
@@ -25,6 +29,8 @@ const fighters = [
     nationality: "DR", 
     weightClass: "Super Featherweight",
     image: "/images/EridsonGarcia.webp",
+    flag: "/images/DRflag.webp",
+    wins: "20", losses: "1", draws: "0", kos: "12"
   },
   { 
     name: "Chavon Stillwell", 
@@ -32,6 +38,8 @@ const fighters = [
     nationality: "USA", 
     weightClass: "Cruiserweight",
     image: "/images/ChavonStillwell.webp",
+    flag: "/images/USAflag.webp",
+    wins: "6", losses: "0", draws: "0", kos: "5"
   },
   { 
     name: "Eliesel Rodriguez Ledesma", 
@@ -39,6 +47,8 @@ const fighters = [
     nationality: "DR", 
     weightClass: "Super Featherweight",
     image: "/images/ElieselRodriguezLedesma.webp",
+    flag: "/images/DRflag.webp",
+    wins: "5", losses: "0", draws: "1", kos: "4"
   },
   { 
     name: "Rafael Abreu", 
@@ -46,6 +56,8 @@ const fighters = [
     nationality: "DR", 
     weightClass: "Super Welterweight",
     image: "/images/RafaelAbreu.webp",
+    flag: "/images/DRflag.webp",
+    wins: "7", losses: "0", draws: "0", kos: "6"
   },
   { 
     name: "Erick Rosado", 
@@ -53,6 +65,8 @@ const fighters = [
     nationality: "DR", 
     weightClass: "Featherweight",
     image: "/images/ErickRosado.webp",
+    flag: "/images/DRflag.webp",
+    wins: "15", losses: "3", draws: "0", kos: "11"
   }
 ];
 ---
@@ -83,8 +97,8 @@ const fighters = [
     </section>
 
 
-    <!-- Fighters Grid Section -->
-    <section class="py-16 bg-base-100">
+    <!-- Fighters Section -->
+    <section class="py-16 bg-black text-white">
       <div class="container mx-auto px-4">
         <div class="text-center mb-12">
           <p class="text-lg max-w-4xl mx-auto">
@@ -92,39 +106,114 @@ const fighters = [
           </p>
         </div>
 
+        <!-- Top Row Fighters (3 columns) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 max-w-6xl mx-auto">
+          {fighters.slice(0, 3).map((fighter) => (
+            <div class="relative bg-[#334155] rounded-lg overflow-hidden">
+              <!-- Flag -->
+              <div class="absolute top-4 right-4 z-10">
+                <img src={fighter.flag} alt={`${fighter.nationality} flag`} class="w-12 h-8 rounded-sm" />
+              </div>
+              
+              <!-- Fighter Image and Info -->
+              <div class="pt-4 pb-3 px-3 text-center">
+                <div class="w-full h-52 mx-auto mb-3 overflow-hidden rounded">
+                  <img 
+                    src={fighter.image} 
+                    alt={fighter.name}
+                    class="w-full h-full object-contain"
+                  />
+                </div>
+                <h3 class="text-xl font-bold mb-1 text-[#FFD700] uppercase tracking-wide">{fighter.name}</h3>
+                <p class="text-gray-300 text-sm mb-4">{fighter.weightClass}</p>
+              </div>
+              
+              <!-- Stats Grid -->
+              <div class="grid grid-cols-4 gap-0 mb-4">
+                <div class="bg-[#FFD700] text-black py-4 px-3 text-center">
+                  <div class="text-2xl font-black">{fighter.wins}</div>
+                  <div class="text-xs font-bold uppercase">WIN</div>
+                </div>
+                <div class="bg-[#1e293b] text-white py-4 px-3 text-center">
+                  <div class="text-2xl font-black">{fighter.losses}</div>
+                  <div class="text-xs font-bold uppercase">LOSS</div>
+                </div>
+                <div class="bg-[#1e293b] text-white py-4 px-3 text-center">
+                  <div class="text-2xl font-black">{fighter.draws}</div>
+                  <div class="text-xs font-bold uppercase">DRAW</div>
+                </div>
+                <div class="bg-[#1e293b] text-white py-4 px-3 text-center">
+                  <div class="text-2xl font-black">{fighter.kos}</div>
+                  <div class="text-xs font-bold uppercase">KOs</div>
+                </div>
+              </div>
+              
+              <!-- Button -->
+              <div class="p-4">
+                <button class="biyu-unified-btn w-full px-4 py-3 text-sm rounded">
+                  See Fighter Profile
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
         
-        <!-- Fighters Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
-          {fighters.map((fighter) => (
-            <FighterCard
-              name={fighter.name}
-              record={fighter.record}
-              weightClass={fighter.weightClass}
-              image={fighter.image}
-            />
+        <!-- Bottom Row Fighters (4 columns) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          {fighters.slice(3).map((fighter) => (
+            <div class="relative bg-[#334155] rounded-lg overflow-hidden">
+              <!-- Flag -->
+              <div class="absolute top-3 right-3 z-10">
+                <img src={fighter.flag} alt={`${fighter.nationality} flag`} class="w-10 h-6 rounded-sm" />
+              </div>
+              
+              <!-- Fighter Image and Info -->
+              <div class="pt-3 pb-2 px-2 text-center">
+                <div class="w-full h-36 mx-auto mb-2 overflow-hidden rounded">
+                  <img 
+                    src={fighter.image} 
+                    alt={fighter.name}
+                    class="w-full h-full object-contain"
+                  />
+                </div>
+                <h3 class="text-base font-bold mb-1 text-[#FFD700] uppercase tracking-wide leading-tight">{fighter.name}</h3>
+                <p class="text-gray-300 text-xs mb-4">{fighter.weightClass}</p>
+              </div>
+              
+              <!-- Stats Grid -->
+              <div class="grid grid-cols-4 gap-0 mb-4">
+                <div class="bg-[#FFD700] text-black py-3 px-2 text-center">
+                  <div class="text-lg font-black">{fighter.wins}</div>
+                  <div class="text-xs font-bold uppercase">WIN</div>
+                </div>
+                <div class="bg-[#1e293b] text-white py-3 px-2 text-center">
+                  <div class="text-lg font-black">{fighter.losses}</div>
+                  <div class="text-xs font-bold uppercase">LOSS</div>
+                </div>
+                <div class="bg-[#1e293b] text-white py-3 px-2 text-center">
+                  <div class="text-lg font-black">{fighter.draws}</div>
+                  <div class="text-xs font-bold uppercase">DRAW</div>
+                </div>
+                <div class="bg-[#1e293b] text-white py-3 px-2 text-center">
+                  <div class="text-lg font-black">{fighter.kos}</div>
+                  <div class="text-xs font-bold uppercase">KOs</div>
+                </div>
+              </div>
+              
+              <!-- Button -->
+              <div class="p-4">
+                <button class="biyu-unified-btn w-full px-4 py-2 text-xs rounded">
+                  See Fighter Profile
+                </button>
+              </div>
+            </div>
           ))}
         </div>
       </div>
     </section>
-
-    <!-- Call to Action Section -->
-    <section class="py-16 bg-gradient-to-br from-primary/10 to-base-200">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto text-center">
-          <h2 class="text-3xl font-display font-bold mb-6 text-primary">
-            Box for us
-          </h2>
-          <p class="text-lg mb-8">
-            If you are a talented boxer seeking to carve out a career in the professional ranks then BiYu Promotions wants to hear from you.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/box-for-us/" class="btn btn-primary btn-lg">
-              Learn More
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
+    
+    <BoxForUsSection />
+    
   </main>
 
   <Footer />

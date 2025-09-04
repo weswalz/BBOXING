@@ -2,6 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import Header from '../../../components/sections/Header.astro';
 import Footer from '../../../components/sections/Footer.astro';
+import BoxForUsSection from '../../../components/sections/BoxForUsSection.astro';
 
 const previousEvents = [
   {
@@ -45,24 +46,25 @@ const previousEvents = [
     </section>
 
     <!-- Events Grid -->
-    <section class="py-16 bg-base-100">
+    <section class="py-16 bg-black text-white">
       <div class="container mx-auto px-4">
         <div class="max-w-6xl mx-auto">
           <div class="grid md:grid-cols-2 gap-8">
             {previousEvents.map((event) => (
-              <div class="card bg-base-200 shadow-xl overflow-hidden">
-                <figure class="h-64">
-                  <img 
-                    src={event.image} 
-                    alt={event.title}
-                    class="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </figure>
-                <div class="card-body">
-                  <h2 class="card-title text-2xl font-display">{event.title}</h2>
-                  <p class="text-lg">{event.date}</p>
-                  <p class="text-base-content/80">{event.venue}</p>
+              <div class="relative overflow-hidden rounded-lg">
+                <img 
+                  src={event.image} 
+                  alt={event.title}
+                  class="w-full h-80 object-cover"
+                  loading="lazy"
+                />
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
+                  <h2 class="text-2xl font-display font-bold text-[#FFD700] mb-2">{event.title}</h2>
+                  <p class="text-lg mb-1">{event.date}</p>
+                  <p class="text-base">{event.venue}</p>
+                  <button class="biyu-unified-btn mt-4 px-4 py-2 text-sm">
+                    View More
+                  </button>
                 </div>
               </div>
             ))}
@@ -70,6 +72,9 @@ const previousEvents = [
         </div>
       </div>
     </section>
+    
+    <BoxForUsSection />
+    
   </main>
 
   <Footer />

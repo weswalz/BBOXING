@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/sections/Header.astro';
 import Footer from '../../components/sections/Footer.astro';
-import ContactForm from '../../components/ui/ContactForm.astro';
+import BoxForUsSection from '../../components/sections/BoxForUsSection.astro';
 ---
 
 <Layout 
@@ -13,7 +13,7 @@ import ContactForm from '../../components/ui/ContactForm.astro';
   
   <main class="min-h-screen">
     <!-- Hero Section -->
-    <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">
+    <section class="relative h-screen flex items-center justify-center text-white">
       <div class="absolute inset-0 z-0">
         <img 
           src="/images/boxforushero.webp" 
@@ -30,60 +30,76 @@ import ContactForm from '../../components/ui/ContactForm.astro';
       </div>
     </section>
 
-    <!-- Main Content -->
-    <section class="py-16 bg-base-100">
-      <div class="container mx-auto px-4">
+    <!-- Career Section -->
+    <section class="relative py-16 text-white">
+      <div class="absolute inset-0 z-0">
+        <img 
+          src="/images/careerbackground.webp" 
+          alt="Career Background" 
+          class="w-full h-full object-cover"
+        />
+      </div>
+      
+      <div class="relative z-10 container mx-auto px-4">
         <div class="max-w-4xl mx-auto">
-          <!-- Background Image Section -->
-          <div class="mb-12">
-            <img 
-              src="/images/careerbackground.webp" 
-              alt="Boxing Career with BiYu" 
-              class="w-full rounded-lg shadow-xl"
-              loading="lazy"
-            />
-          </div>
-
-          <div class="prose prose-lg max-w-none">
-            <h2 class="text-3xl font-display font-bold mb-6 text-primary">Career</h2>
-            
-            <p class="text-lg mb-6">
+          <h2 class="text-4xl font-display font-bold mb-8 text-[#FFD700]">Career</h2>
+          
+          <div class="space-y-6 text-lg leading-relaxed">
+            <p>
               If you are a talented boxer seeking to carve out a career in the professional ranks then BiYu Promotions wants to hear from you.
             </p>
-
-            <p class="text-lg mb-6">
+            
+            <p>
               BiYu Promotions offers boxers the opportunity to advance their professional boxing careers via management, promotion and career development.
             </p>
-
-            <p class="text-lg mb-6">
+            
+            <p>
               With access to top trainers, BiYu also offers matchmaking services to assist with your progress in the rankings and securing fights as well as title shots.
             </p>
-
-            <h2 class="text-3xl font-display font-bold mb-6 text-primary">Facilities</h2>
-            
-            <p class="text-lg mb-6">
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Facilities Section -->
+    <section class="py-16 bg-black text-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-4xl font-display font-bold mb-8 text-[#FFD700]">Facilities</h2>
+          
+          <div class="space-y-6 text-lg leading-relaxed">
+            <p>
               We house a dedicated training facility at our Legions Training Complex in Houston that provides everything a fighter needs to hone their skills and prepare for competition.
             </p>
-
-            <p class="text-lg mb-6">
+            
+            <p>
               We even have living accommodation in Houston that can support fighters who may need to relocate to advance their careers.
             </p>
-
-            <p class="text-lg mb-6">
+            
+            <p>
               BiYu Promotions runs regular boxing events in Houston, Dominican Republic and South America and our fighters have the opportunity to fight locally and internationally.
             </p>
-
-            <h2 class="text-3xl font-display font-bold mb-6 text-primary">Leadership</h2>
-            
-            <p class="text-lg mb-6">
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Leadership Section -->
+    <section class="py-16 bg-black text-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-4xl font-display font-bold mb-8 text-[#FFD700]">Leadership</h2>
+          
+          <div class="space-y-6 text-lg leading-relaxed">
+            <p>
               BiYu Promotions is led by its CEO's Bobby Harrison and Rene Sanchez. Combined, the duo has over 40 years of experience in the sport and have travelled the world with iconic champions. They now bring their passion for the sport to BiYu Promotions and aim to continue their long track record of success.
             </p>
-
-            <p class="text-lg mb-6">
+            
+            <p>
               Already the pair are managing 2 world title contenders in the form of Marquis Taylor, who is currently ranked 13th by the WBC at Middleweight and Eridson Garcia who is ranked 13th by the WBA at Super Featherweight.
             </p>
-
-            <p class="text-lg mb-6">
+            
+            <p>
               Additionally, they are managing Heavyweight Contender Wilfred Buelvas and a host of undefeated talent such as Rafael Abreu, Chavon Stillwell and Eliesel Rodriguez Ledesma and a host of fighters who are on their way up in the sport.
             </p>
           </div>
@@ -92,10 +108,10 @@ import ContactForm from '../../components/ui/ContactForm.astro';
     </section>
 
     <!-- Application Form Section -->
-    <section class="py-16 bg-gradient-to-br from-primary/10 to-base-200">
+    <section class="py-16 bg-black text-white">
       <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto">
-          <h2 class="text-4xl font-display font-bold text-center mb-8 text-primary">
+        <div class="max-w-2xl mx-auto">
+          <h2 class="text-4xl font-display font-bold text-center mb-4 text-[#FFD700]">
             Apply to Join BiYu Promotions
           </h2>
           
@@ -103,10 +119,82 @@ import ContactForm from '../../components/ui/ContactForm.astro';
             Ready to take your boxing career to the next level? Fill out the form below and our team will be in touch.
           </p>
 
-          <ContactForm variant="fighter" />
+          <form class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-bold mb-2">Full Name</label>
+                <input type="text" class="w-full p-3 bg-white text-black" required />
+              </div>
+              <div>
+                <label class="block text-sm font-bold mb-2">Age</label>
+                <input type="number" class="w-full p-3 bg-white text-black" required />
+              </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-bold mb-2">City</label>
+                <input type="text" class="w-full p-3 bg-white text-black" required />
+              </div>
+              <div>
+                <label class="block text-sm font-bold mb-2">Weight Division</label>
+                <input type="text" class="w-full p-3 bg-white text-black" required />
+              </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-bold mb-2">Email</label>
+                <input type="email" class="w-full p-3 bg-white text-black" required />
+              </div>
+              <div>
+                <label class="block text-sm font-bold mb-2">Phone</label>
+                <input type="tel" class="w-full p-3 bg-white text-black" required />
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold mb-2">Social Media (Optional)</label>
+              <input type="text" placeholder="Instagram, Twitter, Facebook etc" class="w-full p-3 bg-white text-black" />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold mb-2">Amateur Career</label>
+              <textarea placeholder="Tell us about your amateur boxing experience" class="w-full p-3 bg-white text-black h-24" required></textarea>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold mb-2">Professional Career (if applicable)</label>
+              <textarea placeholder="Tell us about your professional boxing experience" class="w-full p-3 bg-white text-black h-24"></textarea>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold mb-2">Significant Titles & Victories</label>
+              <textarea placeholder="Tell us your achievements and notable victories" class="w-full p-3 bg-white text-black h-24"></textarea>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold mb-2">Current Management</label>
+              <textarea placeholder="Are you currently being managed?" class="w-full p-3 bg-white text-black h-24"></textarea>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold mb-2">Why BiYu Promotions?</label>
+              <textarea placeholder="Why do you want to join BiYu Promotions?" class="w-full p-3 bg-white text-black h-24"></textarea>
+            </div>
+            
+            <div class="text-center">
+              <button type="submit" class="biyu-unified-btn px-8 py-3">
+                Submit Application
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </section>
+    
+    <BoxForUsSection />
+    
   </main>
 
   <Footer />

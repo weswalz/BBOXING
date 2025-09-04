@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  biyuboxing:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  biyuboxing-dev:
+    build:
+      context: .
+      target: builder
+    ports:
+      - "4321:4321"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped

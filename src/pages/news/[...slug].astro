@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import PressRelease from '../../components/PressRelease.astro';
+
+export async function getStaticPaths() {
+  const newsArticles = await getCollection('news');
+  
+  return newsArticles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await article.render();
+---
+
+<PressRelease
+  title={article.data.title}
+  excerpt={article.data.excerpt}
+  publishDate={article.data.publishDate}
+  image={article.data.image}
+  imageAlt={article.data.imageAlt}
+  author={article.data.author}
+  location={article.data.location}
+  slug={article.slug}
+  tags={article.data.tags}
+  metaDescription={article.data.metaDescription}
+  content={article.body}
+>
+  <Content />
+</PressRelease>

@@ -1,0 +1,130 @@
+==============================================
+GODADDY DNS RECORDS FOR BIYUBOXING.COM
+==============================================
+Add these records after switching nameservers from Cloudflare to GoDaddy
+==============================================
+
+## A RECORDS (Website)
+-----------------------
+Type: A
+Name: @
+Value: 104.219.54.169
+TTL: 600 (or 1 hour)
+
+Type: A  
+Name: www
+Value: 104.219.54.169
+TTL: 600 (or 1 hour)
+
+## MX RECORDS (Email - Google Workspace)
+-----------------------------------------
+OPTION 1 - Single Record (Simple):
+Type: MX
+Name: @
+Priority: 1
+Value: smtp.google.com
+TTL: 1 hour
+
+OPTION 2 - Google's Recommended (Better redundancy):
+Type: MX
+Name: @
+Priority: 1
+Value: aspmx.l.google.com
+TTL: 1 hour
+
+Type: MX
+Name: @
+Priority: 5
+Value: alt1.aspmx.l.google.com
+TTL: 1 hour
+
+Type: MX
+Name: @
+Priority: 5
+Value: alt2.aspmx.l.google.com
+TTL: 1 hour
+
+Type: MX
+Name: @
+Priority: 10
+Value: alt3.aspmx.l.google.com
+TTL: 1 hour
+
+Type: MX
+Name: @
+Priority: 10
+Value: alt4.aspmx.l.google.com
+TTL: 1 hour
+
+## TXT RECORDS (Email Authentication & Verification)
+------------------------------------------------------
+SPF Record:
+Type: TXT
+Name: @
+Value: v=spf1 include:_spf.google.com ~all
+TTL: 1 hour
+
+DMARC Record:
+Type: TXT
+Name: _dmarc
+Value: v=DMARC1; p=none;
+TTL: 1 hour
+
+DKIM Record (Google):
+Type: TXT
+Name: google._domainkey
+Value: v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuaODwDlRqal7SPDK3ueoD9isXmF7UviqB6moUMDaAOHm8pkSZn2wRkQgZfOboQMsorWWliniFoWX4XUnBbqdD/rxrVjxmo66M/P+9bXsscYJEZ3GIFMEMP/JDEsnwIMYww2EBDq/Kmx2uYIKHrDKq/XxNsdvk1qwWiJLm7rmMrcSf0P6ROWcfMgoXNI+nL5pzjs5We0jjCNDzBS9tULg3y9sNgkFrTCdviKMX70wYHHgU1stp/MWg0eJbIWYkYi9qTKU+YblrslFZsqgrBdo8wwsM0N5aI8IFZ9YZwhNahN9uszZsxma9SSLJAVvgI8jO8vNn8b1MT8sswU0urGf0QIDAQAB
+TTL: 1 hour
+
+Google Site Verification 1:
+Type: TXT
+Name: @
+Value: google-site-verification=L2VTdaHKrELWB23yU10-RJ31IPyRIyD2IDmOCsYozI0
+TTL: 1 hour
+
+Google Site Verification 2:
+Type: TXT
+Name: @
+Value: google-site-verification=beAfiv0iIRPJt70zkB9GmuwZ-YQzUCSurTrwRQiVVpA
+TTL: 1 hour
+
+==============================================
+MIGRATION STEPS:
+==============================================
+1. BEFORE MIGRATION:
+   - Lower TTL on Cloudflare records to 300 seconds (5 minutes)
+   - Wait at least 1 hour for old TTL to expire
+   - Take screenshots of current Cloudflare DNS settings
+
+2. MIGRATION:
+   - Change nameservers at GoDaddy from Cloudflare to GoDaddy's default
+   - Add all records above in GoDaddy DNS management
+   - Verify all records are saved
+
+3. AFTER MIGRATION:
+   - Test email immediately (send and receive)
+   - Check website accessibility 
+   - Monitor DNS propagation (use whatsmydns.net)
+   - Test email authentication (use mail-tester.com)
+
+==============================================
+IMPORTANT NOTES:
+==============================================
+- Email may have brief interruptions during propagation
+- DNS changes can take 24-48 hours to fully propagate
+- Keep Cloudflare DNS records as backup reference
+- The website will be accessible via IP during propagation
+- Consider using Google's 5 MX records for better reliability
+
+==============================================
+TESTING COMMANDS (After Migration):
+==============================================
+# Test DNS propagation:
+dig @8.8.8.8 biyuboxing.com A
+dig @8.8.8.8 biyuboxing.com MX
+dig @8.8.8.8 biyuboxing.com TXT
+dig @8.8.8.8 _dmarc.biyuboxing.com TXT
+dig @8.8.8.8 google._domainkey.biyuboxing.com TXT
+
+# Test email:
+nslookup -type=MX biyuboxing.com
